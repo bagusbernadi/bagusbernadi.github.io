@@ -110,8 +110,20 @@ select{font:inherit;font-size:14px;font-weight:600;padding:6px 10px;border-radiu
 .two>div>p{max-width:65ch}
 .note ol{margin:0;padding-left:20px}.note li{margin:4px 0}
 .skills{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.skills .card h3{font-size:17px}
+.skills .card{--h:var(--navyH);border-top:4px solid var(--h)}
+.skills .card h3{font-size:17px;color:color-mix(in srgb,var(--h) 85%,#000)}
 .skills .card p{margin:0;font-size:15px;color:var(--mut)}
+.nw{white-space:nowrap}
+.term{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;text-decoration:underline dotted color-mix(in srgb,var(--h) 65%,transparent);text-underline-offset:3px;text-decoration-thickness:1.5px}
+.skills .card p .term{color:color-mix(in srgb,var(--h) 70%,var(--ink))}
+.term:hover,.term[aria-expanded="true"]{color:color-mix(in srgb,var(--h) 85%,#000)!important;background:color-mix(in srgb,var(--h) 12%,var(--card));border-radius:3px}
+.term:focus-visible{outline:2px solid var(--h);outline-offset:1px;border-radius:3px}
+#tip{--h:var(--blue);position:absolute;z-index:50;width:max-content;max-width:min(300px,calc(100vw - 16px));background:var(--card);border:1px solid var(--line);border-left:4px solid var(--h);border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:10px 12px;font-size:14px;line-height:1.4;color:var(--ink)}
+#tip b{color:color-mix(in srgb,var(--h) 85%,#000);font-size:15px}
+#tip .tf{display:block;font-size:12.5px;font-weight:600;color:var(--mut);margin-top:1px}
+#tip p{margin:6px 0 0}
+#tip .tl{font:inherit;font-size:13.5px;font-weight:600;color:color-mix(in srgb,var(--h) 85%,#000);background:none;border:0;padding:0;margin-top:8px;cursor:pointer}
+#tip .tl:hover{text-decoration:underline}
 
 .foot{margin-top:64px;padding-top:20px;padding-bottom:32px;border-top:1px solid var(--line);font-size:14px;color:var(--mut)}
 

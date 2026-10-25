@@ -23,7 +23,7 @@ en:{"nav.projects":"Projects","nav.about":"About","nav.skills":"Skills","nav.con
 "about.h3":"How to read each project",
 "about.l1":"<b>Problem</b>: the business question.","about.l2":"<b>Data</b>: source, size, and cleaning steps.","about.l3":"<b>Analysis</b>: method, code, and findings.","about.l4":"<b>Recommendation</b>: actions based on findings.","about.l5":"<b>Impact</b>: formula with explicit assumptions.",
 "about.note":"Manufacturing projects use simulated or anonymized data because factory data is confidential. Impact numbers are labeled \"estimated\" or \"simulated\".",
-"skills.title":"Skills",
+"skills.title":"Skills","skills.sub":"Underlined terms: hover or tap for a short explanation.","tip.used":n=>`Used in ${n} projects →`,
 "sk":[["SQL","DuckDB, SQLite, PostgreSQL, BigQuery. CTE, window functions, views, data tests."],["Python","pandas, NumPy, Polars, Plotly, scikit-learn, scripts and notebooks."],["Statistics","Hypothesis tests, confidence intervals, SPC and control charts, Cp/Cpk, A/B testing."],["Excel","Formulas, data validation, sheet protection, Power Query, cross-checking results."],["Dashboards","Streamlit, Looker Studio, Power BI. KPI design for non-technical readers."],["Data pipelines","ETL, parsing messy files, GitHub Actions scheduling, dbt."],["AI for analytics","LLM classification and extraction, natural-language-to-SQL with evaluation."],["Manufacturing domain","Yield, rework, defect Pareto, cycle time, QCC, operator training."]],
 "contact.title":"Contact","contact.sub":"Open to Data Analyst roles in Indonesia and abroad.",
 "foot":"Built with plain HTML, CSS, and JavaScript. Hosted on GitHub Pages."},
@@ -49,7 +49,7 @@ id:{"nav.projects":"Project","nav.about":"Tentang","nav.skills":"Keahlian","nav.
 "about.h3":"Cara membaca setiap project",
 "about.l1":"<b>Problem</b>: pertanyaan bisnis.","about.l2":"<b>Data</b>: sumber, ukuran, dan langkah cleaning.","about.l3":"<b>Analysis</b>: metode, kode, dan temuan.","about.l4":"<b>Recommendation</b>: tindakan berdasarkan temuan.","about.l5":"<b>Impact</b>: rumus dengan asumsi yang tertulis jelas.",
 "about.note":"Project manufaktur memakai data simulasi atau data yang dianonimkan karena data pabrik bersifat rahasia. Angka dampak diberi label \"estimated\" atau \"simulated\".",
-"skills.title":"Keahlian",
+"skills.title":"Keahlian","skills.sub":"Istilah bergaris bawah: arahkan kursor atau ketuk untuk penjelasan singkat.","tip.used":n=>`Dipakai di ${n} project →`,
 "sk":[["SQL","DuckDB, SQLite, PostgreSQL, BigQuery. CTE, window function, view, data test."],["Python","pandas, NumPy, Polars, Plotly, scikit-learn, skrip dan notebook."],["Statistik","Uji hipotesis, confidence interval, SPC dan control chart, Cp/Cpk, A/B testing."],["Excel","Rumus, data validation, proteksi sheet, Power Query, cek silang hasil."],["Dashboard","Streamlit, Looker Studio, Power BI. Desain KPI untuk pembaca non-teknis."],["Data pipeline","ETL, parsing file berantakan, penjadwalan GitHub Actions, dbt."],["AI untuk analitik","Klasifikasi dan ekstraksi dengan LLM, natural language to SQL beserta evaluasinya."],["Domain manufaktur","Yield, rework, Pareto defect, cycle time, QCC, pelatihan operator."]],
 "contact.title":"Kontak","contact.sub":"Terbuka untuk posisi Data Analyst di Indonesia maupun luar negeri.",
 "foot":"Dibuat dengan HTML, CSS, dan JavaScript murni. Di-hosting di GitHub Pages."}};
@@ -72,6 +72,53 @@ const SKG=["db","py","bi","eng"];
 const GH={db:"--navyH",py:"--tealH",bi:"--amberH",eng:"--plumH"},SHADE=[0,22,38];
 const SKCOL={};SKG.forEach(g=>SK.filter(s=>s[0]===g).forEach((s,i)=>{SKCOL[s[1]]=`color-mix(in srgb,var(${GH[g]}) ${100-SHADE[i%3]}%,#000)`}));
 const skc=n=>SKCOL[n]||"var(--blue)";
+// Glossary for the Skills cards: platforms and acronyms get a dotted underline and a popover.
+// key = text as written in "sk"; f = what the acronym stands for; sk = name in SK (adds the "used in N projects" link); h = match in card titles only
+const GL={
+"SQL":{h:1,f:"Structured Query Language",en:"The standard language for querying and shaping data in a database.",id:"Bahasa standar untuk mengambil dan mengolah data di database."},
+"DuckDB":{sk:"DuckDB",en:"Fast analytics SQL database that runs inside a script with no server; reads CSV and Parquet files directly.",id:"Database SQL analitik yang berjalan di dalam skrip tanpa server; bisa langsung membaca file CSV dan Parquet."},
+"SQLite":{sk:"SQLite",en:"Lightweight SQL database stored as a single file; common in small apps.",id:"Database SQL ringan yang tersimpan dalam satu file; umum dipakai di aplikasi kecil."},
+"PostgreSQL":{sk:"PostgreSQL",en:"Open-source server database (\"Postgres\") for multi-user applications.",id:"Database server open-source (\"Postgres\") untuk aplikasi dengan banyak pengguna."},
+"BigQuery":{sk:"BigQuery",en:"Google Cloud data warehouse: runs SQL over large datasets with no server to manage.",id:"Data warehouse Google Cloud: menjalankan SQL pada data besar tanpa perlu mengelola server."},
+"CTE":{f:"Common Table Expression",en:"A named step inside a query (WITH ...) that keeps long queries readable.",id:"Langkah bernama di dalam query (WITH ...) agar query panjang tetap mudah dibaca."},
+"Python":{h:1,en:"General-purpose programming language; the main language for data analysis.",id:"Bahasa pemrograman serbaguna; bahasa utama untuk analisis data."},
+"pandas":{sk:"pandas",en:"Python library for tables (DataFrames): cleaning, joining, and grouping data.",id:"Library Python untuk tabel (DataFrame): membersihkan, menggabungkan, dan mengelompokkan data."},
+"NumPy":{f:"Numerical Python",sk:"NumPy",en:"Fast arrays and math; the foundation of most Python data libraries.",id:"Array dan perhitungan numerik yang cepat; fondasi sebagian besar library data Python."},
+"Polars":{sk:"Polars",en:"Newer DataFrame library, faster than pandas on large data.",id:"Library DataFrame yang lebih baru, lebih cepat dari pandas untuk data besar."},
+"Plotly":{sk:"Plotly",en:"Interactive charts (zoom, hover) for notebooks, web pages, and dashboards.",id:"Grafik interaktif (zoom, hover) untuk notebook, halaman web, dan dashboard."},
+"scikit-learn":{sk:"scikit-learn",en:"Machine-learning library: clustering, classification, regression, and model evaluation.",id:"Library machine learning: clustering, klasifikasi, regresi, dan evaluasi model."},
+"notebooks":{f:"Jupyter Notebook",sk:"Jupyter",en:"A document that mixes code, results, and notes; used to explore data step by step.",id:"Dokumen yang menggabungkan kode, hasil, dan catatan; dipakai untuk menelusuri data langkah demi langkah."},
+"SPC":{f:"Statistical Process Control",en:"Monitoring a process with statistics to separate normal variation from real problems.",id:"Memantau proses dengan statistik untuk memisahkan variasi normal dari masalah yang nyata."},
+"Cp/Cpk":{f:"Process Capability index",en:"How well a process fits its spec limits. Cp looks at spread only; Cpk also at centering. 1.33 or more is commonly treated as capable.",id:"Seberapa baik proses masuk batas spesifikasi. Cp hanya melihat lebar sebaran; Cpk juga posisi tengahnya. Nilai 1,33 ke atas umumnya dianggap capable."},
+"A/B testing":{en:"Comparing two versions on random groups to see which one really performs better.",id:"Membandingkan dua versi pada kelompok acak untuk melihat mana yang benar-benar lebih baik."},
+"Power Query":{sk:"Power Query",en:"Excel and Power BI tool to import and clean data in recorded, repeatable steps.",id:"Fitur Excel dan Power BI untuk impor dan membersihkan data dengan langkah yang terekam dan bisa diulang."},
+"Streamlit":{sk:"Streamlit",en:"Python framework that turns a script into an interactive web app or dashboard.",id:"Framework Python yang mengubah skrip menjadi aplikasi web atau dashboard interaktif."},
+"Looker Studio":{sk:"Looker Studio",en:"Google's free dashboard tool (formerly Data Studio); connects to Sheets and BigQuery.",id:"Tool dashboard gratis dari Google (dulu Data Studio); terhubung ke Sheets dan BigQuery."},
+"Power BI":{f:"BI = Business Intelligence",sk:"Power BI",en:"Microsoft's dashboard and reporting tool.",id:"Tool dashboard dan pelaporan dari Microsoft."},
+"KPI":{f:"Key Performance Indicator",en:"The headline number that shows whether a goal is met, e.g. yield %.",id:"Angka utama yang menunjukkan apakah target tercapai, misalnya yield %."},
+"ETL":{f:"Extract, Transform, Load",en:"Pulling data from its sources, cleaning it, and loading it into a database.",id:"Mengambil data dari sumbernya, membersihkannya, lalu memuatnya ke database."},
+"GitHub Actions":{sk:"GitHub Actions",en:"GitHub's automation service: runs scripts on a schedule or on every code change.",id:"Layanan otomasi GitHub: menjalankan skrip sesuai jadwal atau setiap ada perubahan kode."},
+"dbt":{f:"data build tool",sk:"dbt",en:"Builds analytics tables from SQL models, with built-in tests and documentation.",id:"Membangun tabel analitik dari model SQL, lengkap dengan test dan dokumentasi."},
+"AI":{h:1,f:"Artificial Intelligence",en:"Software that does tasks that normally need human judgment, such as reading text.",id:"Perangkat lunak yang mengerjakan tugas yang biasanya butuh penilaian manusia, misalnya membaca teks."},
+"LLM":{f:"Large Language Model",sk:"LLM",en:"AI model that reads and writes text, such as Claude or GPT.",id:"Model AI yang membaca dan menulis teks, seperti Claude atau GPT."},
+"QCC":{f:"Quality Control Circle",en:"Small team of workers solving a quality problem with structured steps (PDCA).",id:"Kelompok kecil karyawan yang menyelesaikan masalah kualitas dengan langkah terstruktur (PDCA)."}};
+// one hue per Skills card, in "sk" order; no two neighbours share a hue in the 4-, 2- or 1-column grid
+const SKH=["--navyH","--tealH","--plumH","--amberH","--roseH","--navyH","--tealH","--plumH"];
+const GLA={"notebook":"notebooks"};// Indonesian spelling -> glossary key
+const glRe=h=>new RegExp(`(?<![\\w-])(${[...Object.keys(GL).filter(k=>h||!GL[k].h),...Object.keys(GLA)].sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&")).join("|")})(?![\\w-])([.,;:)]*)`,"g");
+const GLR=[glRe(0),glRe(1)];
+// trailing punctuation stays on the same line as the term
+const glMark=(s,h)=>s.replace(GLR[h?1:0],(_,m,p)=>`<span class="nw"><button type="button" class="term" data-gl="${GLA[m]||m}" aria-expanded="false">${m}</button>${p}</span>`);
+const tip=document.createElement("div");tip.id="tip";tip.setAttribute("role","tooltip");tip.hidden=true;document.body.appendChild(tip);
+let tipFor=null,tipT=0;
+function showTip(b){clearTimeout(tipT);if(tipFor===b&&!tip.hidden)return;const k=b.dataset.gl,g=GL[k],n=g.sk?SKC(g.sk):0;
+ tip.innerHTML=`<b>${esc(k)}</b>${g.f?`<span class="tf">${esc(g.f)}</span>`:""}<p>${esc(g[lang]||g.en)}</p>${n?`<button type="button" class="tl" data-skf="${esc(g.sk)}">${T[lang]["tip.used"](n)}</button>`:""}`;
+ tip.style.setProperty("--h",getComputedStyle(b).getPropertyValue("--h")||"var(--blue)");
+ if(tipFor)tipFor.setAttribute("aria-expanded","false");tipFor=b;b.setAttribute("aria-expanded","true");tip.hidden=false;
+ const r=b.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,vw=document.documentElement.clientWidth;
+ const x=Math.max(8,Math.min(r.left+r.width/2-w/2,vw-w-8));let y=r.bottom+8;if(y+h>innerHeight-8&&r.top-h-8>0)y=r.top-h-8;
+ tip.style.left=x+scrollX+"px";tip.style.top=y+scrollY+"px"}
+function hideTip(){clearTimeout(tipT);tip.hidden=true;if(tipFor)tipFor.setAttribute("aria-expanded","false");tipFor=null}
 const STC={done:"var(--tealH)","in-progress":"var(--amberH)",design:"var(--navyH)",planned:"var(--mut)"};
 const CHC={category:v=>`var(${CATH[v]||"--navyH"})`,status:v=>STC[v]};
 
@@ -122,7 +169,8 @@ function render(){
   <div class="meta"><span class="badge st-${p.status}">${t("status."+p.status)}</span></div>
   <div class="links">${hasLink(p)?`<a class="live" href="${liveURL(p)}" target="_blank" rel="noopener">${t("btn.live")}</a><a class="code" href="${repoURL(p)}" target="_blank" rel="noopener">${t("btn.code")}</a>`:`<span>${t("btn.soon")}</span>`}</div>
  </article>`).join("");
- $("skillGrid").innerHTML=t("sk").map(([h,d])=>`<div class="card"><h3>${esc(h)}</h3><p>${esc(d)}</p></div>`).join("");
+ hideTip();
+ $("skillGrid").innerHTML=t("sk").map(([h,d],i)=>`<div class="card" style="--h:var(${SKH[i%SKH.length]})"><h3>${glMark(esc(h),1)}</h3><p>${glMark(esc(d))}</p></div>`).join("");
  const c=[];if(gh)c.push(`<a class="btn pri" href="https://github.com/${gh}" target="_blank" rel="noopener">GitHub</a>`);
  if(PR.linkedin)c.push(`<a class="btn" href="${esc(PR.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`);
  if(PR.email)c.push(`<a class="btn" href="mailto:${esc(PR.email)}">Email</a>`);
@@ -134,6 +182,16 @@ document.querySelector(".lang").onclick=e=>{const b=e.target.closest("button");i
 $("q").oninput=e=>{S.q=e.target.value;render()};
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sk]");if(b){toggleSkill(b.dataset.sk);return}if(e.target.closest("#fSkill .clr")){S.skills=[];if(S.sort==="skill")S.sort="no";syncURL();render()}});
 $("sort").onchange=e=>{S.sort=e.target.value;render()};
+// glossary popover: hover or keyboard focus on desktop, tap on touch; the link filters projects by that skill
+document.addEventListener("mouseover",e=>{const b=e.target.closest(".term");if(b)showTip(b);else if(e.target.closest("#tip"))clearTimeout(tipT)});
+document.addEventListener("mouseout",e=>{if(e.target.closest(".term,#tip"))tipT=setTimeout(hideTip,250)});
+document.addEventListener("focusin",e=>{const b=e.target.closest(".term");if(b)showTip(b);else if(e.target.closest("#tip"))clearTimeout(tipT)});
+document.addEventListener("focusout",e=>{if(e.target.closest(".term,#tip"))tipT=setTimeout(hideTip,250)});
+document.addEventListener("click",e=>{const b=e.target.closest(".term");if(b){showTip(b);return}
+ const f=e.target.closest("[data-skf]");if(f){S.skills=[f.dataset.skf];S.sort="skill";syncURL();render();$("projects").scrollIntoView({behavior:"smooth"});return}
+ if(!e.target.closest("#tip"))hideTip()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&tipFor){const b=tipFor;hideTip();b.focus()}});
+addEventListener("resize",hideTip);
 $("year").textContent="© "+new Date().getFullYear()+" "+(PR.name||"");
 render();
 })();
