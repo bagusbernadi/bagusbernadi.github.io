@@ -5,7 +5,7 @@ en:{"nav.projects":"Projects","nav.about":"About","nav.skills":"Skills","nav.con
 "hero.title":"Turning shop-floor data into decisions",
 "hero.lead":"I am a Process Engineer in high-tech component manufacturing, moving into data analytics. This portfolio collects 34 projects: from yield and defect tracking on the production line to public datasets in retail, energy, and the job market.",
 "hero.cta1":"Browse projects","hero.cta2":"GitHub profile",
-"st.total":"projects","st.mfg":"manufacturing projects","st.ready":"published","st.prog":"in progress or designed",
+"st.total":"projects","st.ready":"published","st.prog":"in progress or designed",
 "proj.title":"Projects","proj.sub":"Every project has its own repository and GitHub Pages site. Each one starts from a business question, then shows the data, analysis, and recommendation.",
 "f.search":"Search","f.ph":"Search title, tool, or question","f.all":"All","f.empty":"No project matches the filter.",
 "s.no":"Order: project number","s.status":"Order: most complete first","s.skill":"Order: most matching skills",
@@ -31,7 +31,7 @@ id:{"nav.projects":"Project","nav.about":"Tentang","nav.skills":"Keahlian","nav.
 "hero.title":"Mengubah data lantai produksi menjadi keputusan",
 "hero.lead":"Saya Process Engineer di manufaktur komponen teknologi tinggi yang sedang beralih ke bidang data analytics. Portofolio ini berisi 34 project: dari pelacakan yield dan defect di lini produksi sampai dataset publik di bidang retail, energi, dan pasar kerja.",
 "hero.cta1":"Lihat project","hero.cta2":"Profil GitHub",
-"st.total":"project","st.mfg":"project manufaktur","st.ready":"sudah terbit","st.prog":"sedang dikerjakan atau sudah dirancang",
+"st.total":"project","st.ready":"sudah terbit","st.prog":"sedang dikerjakan atau sudah dirancang",
 "proj.title":"Project","proj.sub":"Setiap project punya repository dan situs GitHub Pages sendiri. Semua dimulai dari pertanyaan bisnis, lalu menampilkan data, analisis, dan rekomendasi.",
 "f.search":"Cari","f.ph":"Cari judul, tools, atau pertanyaan","f.all":"Semua","f.empty":"Tidak ada project yang cocok dengan filter.",
 "s.no":"Urutan: nomor project","s.status":"Urutan: paling lengkap dulu","s.skill":"Urutan: skill paling cocok",
@@ -146,7 +146,7 @@ function render(){
  $("role").textContent=(PR.role&&PR.role[lang])||"";
  $("brand").textContent=PR.name||"";
  const n=s=>P.filter(p=>s.includes(p.status)).length;
- $("stats").innerHTML=[[P.length,"st.total","--navyH"],[P.filter(p=>p.category==="manufacturing").length,"st.mfg","--tealH"],[n(["done"]),"st.ready","--amberH"],[n(["in-progress","design"]),"st.prog","--plumH"]]
+ $("stats").innerHTML=[[P.length,"st.total","--navyH"],[n(["done"]),"st.ready","--amberH"],[n(["in-progress","design"]),"st.prog","--plumH"]]
   .map(([v,k,h])=>`<div class="stat" style="--h:var(${h})"><b>${v}</b><span>${t(k)}</span></div>`).join("");
  $("legend").innerHTML=["done","in-progress","design","planned"].map(s=>`<span><span class="badge st-${s}">${t("status."+s)}</span>${t("lg."+s)}</span>`).join("");
  $("fSkill").innerHTML=`<div class="sh"><b>${t("f.skill")}</b><span>${t("f.skillh")}</span>${S.skills.length?`<button type="button" class="clr">${t("f.clear")}</button>`:""}</div>`+

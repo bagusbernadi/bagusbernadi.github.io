@@ -36,9 +36,9 @@ Link bisa dibagikan langsung dengan filter skill, misalnya `https://bagusbernadi
 
 | No | Project | Repo | Status |
 |---|---|---|---|
-| 01 | Rainfall Pattern Analysis | [`Project-1-Rainfall-Pattern-Analysis`](https://github.com/bagusbernadi/Project-1-Rainfall-Pattern-Analysis) | design |
-| 02 | Customer Churn Driver Analysis | [`Project-2-Customer-Churn-Analysis`](https://github.com/bagusbernadi/Project-2-Customer-Churn-Analysis) | design |
-| 03 | Yield, Rework & Defect Tracking System | [`Project-3-Yield-Rework-Defect-Tracking`](https://github.com/bagusbernadi/Project-3-Yield-Rework-Defect-Tracking) | design |
+| 01 | Rainfall Pattern Analysis | [`Project-1-Rainfall-Pattern-Analysis`](https://github.com/bagusbernadi/Project-1-Rainfall-Pattern-Analysis) | done |
+| 02 | Customer Churn Driver Analysis | [`Project-2-Customer-Churn-Analysis`](https://github.com/bagusbernadi/Project-2-Customer-Churn-Analysis) | done |
+| 03 | Yield, Rework & Defect Tracking System | [`Project-3-Yield-Rework-Defect-Tracking`](https://github.com/bagusbernadi/Project-3-Yield-Rework-Defect-Tracking) | done |
 | 04 | Before–After Defect Reduction (QCC Insulation Damage) | [`Project-4-Insulation-Damage-Reduction`](https://github.com/bagusbernadi/Project-4-Insulation-Damage-Reduction) | done |
 | 05 | Sensor Time-Series Anomaly Detection | [`Project-5-Sensor-Anomaly-Detection`](https://github.com/bagusbernadi/Project-5-Sensor-Anomaly-Detection) | design |
 | 06 | Energy Consumption Dashboard | [`Project-6-Energy-Consumption-Dashboard`](https://github.com/bagusbernadi/Project-6-Energy-Consumption-Dashboard) | design |
