@@ -46,8 +46,8 @@ Link bisa dibagikan langsung dengan filter skill, misalnya `https://bagusbernadi
 | 08 | Property Price Analysis | [`Project-8-Property-Price-Analysis`](https://github.com/bagusbernadi/Project-8-Property-Price-Analysis) | done |
 | 09 | Sales & Customer Dashboard | [`Project-9-Sales-Customer-Dashboard`](https://github.com/bagusbernadi/Project-9-Sales-Customer-Dashboard) | done |
 | 10 | Cycle Time & Bottleneck Analysis | [`Project-10-Cycle-Time-Bottleneck-Analysis`](https://github.com/bagusbernadi/Project-10-Cycle-Time-Bottleneck-Analysis) | done |
-| 11 | A/B Test Analysis | [`Project-11-AB-Test-Analysis`](https://github.com/bagusbernadi/Project-11-AB-Test-Analysis) | design |
-| 12 | Process Comparison Analysis | [`Project-12-Process-Comparison-Analysis`](https://github.com/bagusbernadi/Project-12-Process-Comparison-Analysis) | design |
+| 11 | A/B Test Analysis | [`Project-11-AB-Test-Analysis`](https://github.com/bagusbernadi/Project-11-AB-Test-Analysis) | done |
+| 12 | Process Comparison Analysis | [`Project-12-Process-Comparison-Analysis`](https://github.com/bagusbernadi/Project-12-Process-Comparison-Analysis) | done |
 | 13 | SpaceX Falcon 9 Landing Analysis | [`Project-13-SpaceX-Falcon9-Landing-Analysis`](https://github.com/bagusbernadi/Project-13-SpaceX-Falcon9-Landing-Analysis) | design |
 | 14 | Social Media Performance Analytics | [`Project-14-Social-Media-Performance-Analytics`](https://github.com/bagusbernadi/Project-14-Social-Media-Performance-Analytics) | design |
 | 15 | SPC Control Chart & Capability Dashboard with Automated Alerts | [`Project-15-SPC-Control-Chart-Dashboard`](https://github.com/bagusbernadi/Project-15-SPC-Control-Chart-Dashboard) | design |
