@@ -39,19 +39,19 @@ Link bisa dibagikan langsung dengan filter skill, misalnya `https://bagusbernadi
 | 01 | Rainfall Pattern Analysis | [`Project-1-Rainfall-Pattern-Analysis`](https://github.com/bagusbernadi/Project-1-Rainfall-Pattern-Analysis) | done |
 | 02 | Customer Churn Driver Analysis | [`Project-2-Customer-Churn-Analysis`](https://github.com/bagusbernadi/Project-2-Customer-Churn-Analysis) | done |
 | 03 | Yield, Rework & Defect Tracking System | [`Project-3-Yield-Rework-Defect-Tracking`](https://github.com/bagusbernadi/Project-3-Yield-Rework-Defect-Tracking) | done |
-| 04 | Before–After Defect Reduction (QCC Insulation Damage) | [`Project-4-Insulation-Damage-Reduction`](https://github.com/bagusbernadi/Project-4-Insulation-Damage-Reduction) | done |
-| 05 | Sensor Time-Series Anomaly Detection | [`Project-5-Sensor-Anomaly-Detection`](https://github.com/bagusbernadi/Project-5-Sensor-Anomaly-Detection) | done |
-| 06 | Energy Consumption Dashboard | [`Project-6-Energy-Consumption-Dashboard`](https://github.com/bagusbernadi/Project-6-Energy-Consumption-Dashboard) | done |
-| 07 | NG Sampling vs ICT | [`Project-7-NG-Sampling-vs-ICT`](https://github.com/bagusbernadi/Project-7-NG-Sampling-vs-ICT) | done |
+| 04 | Before–After Defect Reduction (QCC Insulation Damage) | [`Project-4-Insulation-Damage-Reduction`](https://github.com/bagusbernadi/Project-4-Insulation-Damage-Reduction) | in-progress |
+| 05 | Sensor Time-Series Anomaly Detection | [`Project-5-Sensor-Anomaly-Detection`](https://github.com/bagusbernadi/Project-5-Sensor-Anomaly-Detection) | in-progress |
+| 06 | Energy Consumption Dashboard | [`Project-6-Energy-Consumption-Dashboard`](https://github.com/bagusbernadi/Project-6-Energy-Consumption-Dashboard) | in-progress |
+| 07 | NG Sampling vs ICT | [`Project-7-NG-Sampling-vs-ICT`](https://github.com/bagusbernadi/Project-7-NG-Sampling-vs-ICT) | in-progress |
 | 08 | Property Price Analysis | [`Project-8-Property-Price-Analysis`](https://github.com/bagusbernadi/Project-8-Property-Price-Analysis) | done |
 | 09 | Sales & Customer Dashboard | [`Project-9-Sales-Customer-Dashboard`](https://github.com/bagusbernadi/Project-9-Sales-Customer-Dashboard) | done |
 | 10 | Cycle Time & Bottleneck Analysis | [`Project-10-Cycle-Time-Bottleneck-Analysis`](https://github.com/bagusbernadi/Project-10-Cycle-Time-Bottleneck-Analysis) | done |
-| 11 | A/B Test Analysis | [`Project-11-AB-Test-Analysis`](https://github.com/bagusbernadi/Project-11-AB-Test-Analysis) | done |
+| 11 | A/B Test Analysis | [`Project-11-AB-Test-Analysis`](https://github.com/bagusbernadi/Project-11-AB-Test-Analysis) | in-progress |
 | 12 | Process Comparison Analysis | [`Project-12-Process-Comparison-Analysis`](https://github.com/bagusbernadi/Project-12-Process-Comparison-Analysis) | done |
 | 13 | SpaceX Falcon 9 Landing Analysis | [`Project-13-SpaceX-Falcon9-Landing-Analysis`](https://github.com/bagusbernadi/Project-13-SpaceX-Falcon9-Landing-Analysis) | design |
 | 14 | Social Media Performance Analytics | [`Project-14-Social-Media-Performance-Analytics`](https://github.com/bagusbernadi/Project-14-Social-Media-Performance-Analytics) | design |
 | 15 | SPC Control Chart & Capability Dashboard with Automated Alerts | [`Project-15-SPC-Control-Chart-Dashboard`](https://github.com/bagusbernadi/Project-15-SPC-Control-Chart-Dashboard) | design |
-| 16 | Learning Curve Analysis | [`Project-16-Learning-Curve-Analysis`](https://github.com/bagusbernadi/Project-16-Learning-Curve-Analysis) | design |
+| 16 | Learning Curve Analysis | [`Project-16-Learning-Curve-Analysis`](https://github.com/bagusbernadi/Project-16-Learning-Curve-Analysis) | in-progress |
 | 17 | Supplier Quality Scorecard | [`Project-17-Supplier-Quality-Scorecard`](https://github.com/bagusbernadi/Project-17-Supplier-Quality-Scorecard) | design |
 | 18 | Rework Note Analysis with LLM: Defect Pareto & Trends | [`Project-18-Rework-Note-Pareto-Trends`](https://github.com/bagusbernadi/Project-18-Rework-Note-Pareto-Trends) | design |
 | 19 | Data Quality Audit & Anti-Bypass Template | [`Project-19-Data-Quality-Audit`](https://github.com/bagusbernadi/Project-19-Data-Quality-Audit) | design |
