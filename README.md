@@ -58,9 +58,9 @@ Link bisa dibagikan langsung dengan filter skill, misalnya `https://bagusbernadi
 | 20 | Push Test Data Pipeline + Dashboard | [`Project-20-Push-Test-Data-Pipeline`](https://github.com/bagusbernadi/Project-20-Push-Test-Data-Pipeline) | design |
 | 21 | Natural Language to SQL Analytics Assistant | [`Project-21-NL-to-SQL-Analytics-Assistant`](https://github.com/bagusbernadi/Project-21-NL-to-SQL-Analytics-Assistant) | design |
 | 22 | Cohort & RFM Segmentation | [`Project-22-Cohort-RFM-Segmentation`](https://github.com/bagusbernadi/Project-22-Cohort-RFM-Segmentation) | done |
-| 23 | Telegram Bot Automated KPI Reporting | [`Project-23-Telegram-KPI-Reporting-Bot`](https://github.com/bagusbernadi/Project-23-Telegram-KPI-Reporting-Bot) | design |
-| 24 | Privacy-Preserving Data Sharing Pipeline | [`Project-24-Privacy-Preserving-Data-Pipeline`](https://github.com/bagusbernadi/Project-24-Privacy-Preserving-Data-Pipeline) | design |
-| 25 | Messy Excel Report Parser | [`Project-25-Messy-Excel-Report-Parser`](https://github.com/bagusbernadi/Project-25-Messy-Excel-Report-Parser) | design |
+| 23 | Telegram Bot Automated KPI Reporting | [`Project-23-Telegram-KPI-Reporting-Bot`](https://github.com/bagusbernadi/Project-23-Telegram-KPI-Reporting-Bot) | done |
+| 24 | Privacy-Preserving Data Sharing Pipeline | [`Project-24-Privacy-Preserving-Data-Pipeline`](https://github.com/bagusbernadi/Project-24-Privacy-Preserving-Data-Pipeline) | done |
+| 25 | Messy Excel Report Parser | [`Project-25-Messy-Excel-Report-Parser`](https://github.com/bagusbernadi/Project-25-Messy-Excel-Report-Parser) | done |
 | 26 | Spec Compliance Extraction | [`Project-26-Spec-Compliance-Extraction`](https://github.com/bagusbernadi/Project-26-Spec-Compliance-Extraction) | design |
 | 27 | Analytics Engineering Mini-Warehouse | [`Project-27-Analytics-Engineering-Mini-Warehouse`](https://github.com/bagusbernadi/Project-27-Analytics-Engineering-Mini-Warehouse) | design |
 | 28 | Predictive Maintenance Failure Analysis | [`Project-28-Predictive-Maintenance-Analysis`](https://github.com/bagusbernadi/Project-28-Predictive-Maintenance-Analysis) | design |
