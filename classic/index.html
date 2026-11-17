@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bagus Bernadi · Data Analyst Portfolio (classic)</title>
+<link rel="canonical" href="https://bagusbernadi.github.io/">
+<meta name="robots" content="noindex">
+<meta name="description" content="Data Analyst portfolio of Bagus Bernadi: 34 projects in manufacturing analytics, SQL, Python, statistics, and dashboards.">
+<meta property="og:title" content="Bagus Bernadi · Data Analyst Portfolio">
+<meta property="og:description" content="34 data projects: manufacturing analytics, SQL, Python, statistics, and dashboards.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css?v=20261118a">
+</head>
+<body>
+<div class="newbar" role="note"><span data-nb></span> <a href="../?view=new" data-nb-link></a></div>
+<script>(function(){var l=(function(){try{return localStorage.getItem("lang")}catch(e){return null}})()||((navigator.language||"").slice(0,2));var t={en:["You are viewing the old version of this portfolio.","Switch to the new version →"],id:["Anda sedang melihat tampilan lama portofolio ini.","Pindah ke tampilan baru →"],zh:["您正在浏览旧版作品集。","切换到新版 →"]}[l]||null;t=t||["You are viewing the old version of this portfolio.","Switch to the new version →"];document.querySelector("[data-nb]").textContent=t[0];document.querySelector("[data-nb-link]").textContent=t[1];document.querySelector("[data-nb-link]").addEventListener("click",function(){try{localStorage.setItem("view","new")}catch(e){}});})();</script>
+
+<header class="top">
+ <div class="wrap bar">
+  <a class="brand" href="#top" id="brand">Bagus Bernadi</a>
+  <nav aria-label="Main">
+   <a href="#projects" data-i="nav.projects">Projects</a>
+   <a href="#about" data-i="nav.about">About</a>
+   <a href="#skills" data-i="nav.skills">Skills</a>
+   <a href="#contact" data-i="nav.contact">Contact</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language">
+   <button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="id" aria-pressed="false">ID</button>
+  </div>
+ </div>
+</header>
+
+<main id="top">
+ <section class="hero wrap">
+  <p class="eyebrow" id="role"></p>
+  <h1 data-i="hero.title">Turning shop-floor data into decisions</h1>
+  <p class="lead" data-i="hero.lead">I am a Process Engineer in high-tech component manufacturing, moving into data analytics. This portfolio collects 34 projects: from yield and defect tracking on the production line to public datasets in retail, energy, and the job market.</p>
+  <div class="cta"><a class="btn pri" href="#projects" data-i="hero.cta1">Browse projects</a><a class="btn" id="ghLink" href="https://github.com/bagusbernadi" target="_blank" rel="noopener" data-i="hero.cta2">GitHub profile</a></div>
+  <div class="stats" id="stats"></div>
+ </section>
+
+ <section id="projects" class="wrap">
+  <h2 data-i="proj.title">Projects</h2>
+  <p class="sub" data-i="proj.sub">Every project has its own repository and GitHub Pages site. Each one starts from a business question, then shows the data, analysis, and recommendation.</p>
+  <div class="legend" id="legend"></div>
+  <div class="filters">
+   <label class="search"><span class="sr" data-i="f.search">Search</span><input id="q" type="search" data-ph="f.ph" placeholder="Search title, tool, or question"></label>
+   <div class="skillf" id="fSkill" role="group" aria-label="Skills"></div>
+   <div class="fgroup" id="fCat" role="group" aria-label="Category"></div>
+   <div class="frow">
+    <div class="fgroup" id="fStatus" role="group" aria-label="Status"></div>
+    <select id="sort" aria-label="Sort"><option value="no" data-i="s.no">Order: project number</option><option value="status" data-i="s.status">Order: most complete first</option><option value="skill" data-i="s.skill">Order: most matching skills</option></select>
+   </div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden data-i="f.empty">No project matches the filter.</p>
+ </section>
+
+ <section id="about" class="wrap two">
+  <div>
+   <h2 data-i="about.title">About</h2>
+   <p data-i="about.p1">I work on a high-tech component production line: monitoring output, yield, rework, and defects, training new operators, and building small tools in Excel and Python to make reporting faster and more reliable.</p>
+   <p data-i="about.p2">These projects show how I approach data: define the business question first, clean and validate the data, use SQL and statistics only where they answer the question, and finish with a clear recommendation and an estimated impact.</p>
+  </div>
+  <div class="card note">
+   <h3 data-i="about.h3">How to read each project</h3>
+   <ol>
+    <li data-i="about.l1"><b>Problem</b>: the business question.</li>
+    <li data-i="about.l2"><b>Data</b>: source, size, and cleaning steps.</li>
+    <li data-i="about.l3"><b>Analysis</b>: method, code, and findings.</li>
+    <li data-i="about.l4"><b>Recommendation</b>: actions based on findings.</li>
+    <li data-i="about.l5"><b>Impact</b>: formula with explicit assumptions.</li>
+   </ol>
+   <p class="small" data-i="about.note">Manufacturing projects use simulated or anonymized data because factory data is confidential. Impact numbers are labeled "estimated" or "simulated".</p>
+  </div>
+ </section>
+
+ <section id="skills" class="wrap">
+  <h2 data-i="skills.title">Skills</h2>
+  <p class="sub" data-i="skills.sub">Underlined terms: hover or tap for a short explanation.</p>
+  <div class="skills" id="skillGrid"></div>
+ </section>
+
+ <section id="contact" class="wrap">
+  <h2 data-i="contact.title">Contact</h2>
+  <p class="sub" data-i="contact.sub">Open to Data Analyst roles in Indonesia and abroad.</p>
+  <div class="cta" id="contactLinks"></div>
+ </section>
+</main>
+
+<footer class="wrap foot"><span id="year"></span> · <span data-i="foot">Built with plain HTML, CSS, and JavaScript. Hosted on GitHub Pages.</span></footer>
+
+<script src="../data/projects.js?v=20261118a"></script>
+<script src="app.js?v=20261118a"></script>
+</body>
+</html>

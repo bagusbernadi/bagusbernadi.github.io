@@ -1,197 +1,226 @@
-(function(){
-const P=window.PROJECTS||[],PR=window.PROFILE||{};
-const T={
-en:{"nav.projects":"Projects","nav.about":"About","nav.skills":"Skills","nav.contact":"Contact",
-"hero.title":"Turning shop-floor data into decisions",
-"hero.lead":"I am a Process Engineer in high-tech component manufacturing, moving into data analytics. This portfolio collects 34 projects: from yield and defect tracking on the production line to public datasets in retail, energy, and the job market.",
-"hero.cta1":"Browse projects","hero.cta2":"GitHub profile",
-"st.total":"projects","st.ready":"published","st.prog":"in progress or designed",
-"proj.title":"Projects","proj.sub":"Every project has its own repository and GitHub Pages site. Each one starts from a business question, then shows the data, analysis, and recommendation.",
-"f.search":"Search","f.ph":"Search title, tool, or question","f.all":"All","f.empty":"No project matches the filter.",
-"s.no":"Order: project number","s.status":"Order: most complete first","s.skill":"Order: most matching skills",
-"f.skill":"Filter by skill","f.skillh":"pick one or more; projects using more of them come first","f.clear":"Clear skills","f.match":(a,b)=>`${a} of ${b} skills`,
-"g.db":"Database & SQL","g.py":"Python","g.bi":"BI & dashboard","g.eng":"Engineering & AI",
-"count":(n,t)=>`Showing ${n} of ${t} projects`,
-"status.planned":"Planned","status.design":"Design ready","status.in-progress":"In progress","status.done":"Published",
-"lg.planned":"not started yet","lg.design":"project design published","lg.in-progress":"being built","lg.done":"finished, with live results",
+// Home page logic (Bento layout). Content: data/projects.js (PROFILE, PROJECTS) + data/showcase.js (SHOWCASE).
+// UI text for each language lives in T below. To add a language: add a key to T, a button in .lang, and {xx: "..."} in data files
+// (missing translations fall back to English).
+// Shareable URL options: ?lang=id · ?skill=SQL · ?q=yield
+(function () {
+const P = window.PROJECTS || [], PR = window.PROFILE || {}, S = window.SHOWCASE || {};
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const gh = PR.github || "";
+const live = p => p.live || `https://${gh}.github.io/${p.slug}/`;
+const repo = p => p.repo || `https://github.com/${gh}/${p.slug}`;
+const pdf = n => `https://${gh}.github.io/Creatative/Project_${n}/Project-${n}-One-Pager.pdf`;
+const THUMB = { 3: "p3d", 4: "p4", 20: "p20", 25: "p25", 2: "p2", 17: "p17" };
+const byNo = n => P.find(p => p.no === n), app = id => (S.apps || []).find(a => a.id === id);
+const done = P.filter(p => p.status === "done").length, nApps = (S.apps || []).length;
 
-"cat.manufacturing":"Manufacturing","cat.retail":"E-commerce & Retail","cat.tech":"Tech & Energy","cat.weather":"Weather & Environment","cat.property":"Property & Economy","cat.media":"Media & Social","cat.career":"Job Market & Career","cat.aviation":"Aviation & Compliance",
-"btn.live":"View project","data.l":"Data","dt.public":"Public","dt.sim":"Simulated","dt.own":"Own collection","dt.tbd":"To be selected","btn.code":"Code","btn.soon":"Coming soon",
-"about.title":"About",
-"about.p1":"I work on a high-tech component production line: monitoring output, yield, rework, and defects, training new operators, and building small tools in Excel and Python to make reporting faster and more reliable.",
-"about.p2":"These projects show how I approach data: define the business question first, clean and validate the data, use SQL and statistics only where they answer the question, and finish with a clear recommendation and an estimated impact.",
-"about.h3":"How to read each project",
-"about.l1":"<b>Problem</b>: the business question.","about.l2":"<b>Data</b>: source, size, and cleaning steps.","about.l3":"<b>Analysis</b>: method, code, and findings.","about.l4":"<b>Recommendation</b>: actions based on findings.","about.l5":"<b>Impact</b>: formula with explicit assumptions.",
-"about.note":"Manufacturing projects use simulated or anonymized data because factory data is confidential. Impact numbers are labeled \"estimated\" or \"simulated\".",
-"skills.title":"Skills","skills.sub":"Underlined terms: hover or tap for a short explanation.","tip.used":n=>`Used in ${n} projects →`,
-"sk":[["SQL","DuckDB, SQLite, PostgreSQL, BigQuery. CTE, window functions, views, data tests."],["Python","pandas, NumPy, Polars, Plotly, scikit-learn, scripts and notebooks."],["Statistics","Hypothesis tests, confidence intervals, SPC and control charts, Cp/Cpk, A/B testing."],["Excel","Formulas, data validation, sheet protection, Power Query, cross-checking results."],["Dashboards","Streamlit, Looker Studio, Power BI. KPI design for non-technical readers."],["Data pipelines","ETL, parsing messy files, GitHub Actions scheduling, dbt."],["AI for analytics","LLM classification and extraction, natural-language-to-SQL with evaluation."],["Manufacturing domain","Yield, rework, defect Pareto, cycle time, QCC, operator training."]],
-"contact.title":"Contact","contact.sub":"Open to Data Analyst roles in Indonesia and abroad.",
-"foot":"Built with plain HTML, CSS, and JavaScript. Hosted on GitHub Pages."},
-id:{"nav.projects":"Project","nav.about":"Tentang","nav.skills":"Keahlian","nav.contact":"Kontak",
-"hero.title":"Mengubah data lantai produksi menjadi keputusan",
-"hero.lead":"Saya Process Engineer di manufaktur komponen teknologi tinggi yang sedang beralih ke bidang data analytics. Portofolio ini berisi 34 project: dari pelacakan yield dan defect di lini produksi sampai dataset publik di bidang retail, energi, dan pasar kerja.",
-"hero.cta1":"Lihat project","hero.cta2":"Profil GitHub",
-"st.total":"project","st.ready":"sudah terbit","st.prog":"sedang dikerjakan atau sudah dirancang",
-"proj.title":"Project","proj.sub":"Setiap project punya repository dan situs GitHub Pages sendiri. Semua dimulai dari pertanyaan bisnis, lalu menampilkan data, analisis, dan rekomendasi.",
-"f.search":"Cari","f.ph":"Cari judul, tools, atau pertanyaan","f.all":"Semua","f.empty":"Tidak ada project yang cocok dengan filter.",
-"s.no":"Urutan: nomor project","s.status":"Urutan: paling lengkap dulu","s.skill":"Urutan: skill paling cocok",
-"f.skill":"Filter berdasarkan skill","f.skillh":"pilih satu atau lebih; project yang memakai lebih banyak skill tampil lebih dulu","f.clear":"Hapus pilihan skill","f.match":(a,b)=>`${a} dari ${b} skill`,
-"g.db":"Database & SQL","g.py":"Python","g.bi":"BI & dashboard","g.eng":"Engineering & AI",
-"count":(n,t)=>`Menampilkan ${n} dari ${t} project`,
-"status.planned":"Direncanakan","status.design":"Rancangan siap","status.in-progress":"Dikerjakan","status.done":"Terbit",
-"lg.planned":"belum dimulai","lg.design":"rancangan project sudah terbit","lg.in-progress":"sedang dibangun","lg.done":"selesai, hasil bisa dibuka",
+const T = {
+en: {
+ "nav.work": "Work", "nav.apps": "Apps", "nav.all": "All projects", "nav.svc": "Services", "nav.cta": "Let's work together",
+ "hero.hi": "Hi, I'm Bagus 👋", "hero.h1": "Data analyst with a process engineer's eye.",
+ "hero.p": "I find the real cause behind yield loss, defects, and rework, then build the dashboards and tools that keep the fix in place.",
+ "hero.b1": "See my work", "hero.b2": "Hire me for a project",
+ "n.p": "analytics projects", nD: d => `${d} published with full reports`, "n.a": "web apps built", "n.as": "work, learning & daily use",
+ "shot.k": "Featured app", "shot.p": "Replaces the operator daily-output Excel on the production floor.",
+ "open.h": "Available", "open.p": "Open to Data Analyst roles (Indonesia or remote) and freelance projects.",
+ "stack.h": "Most-used skills · click to see the projects",
+ "talk.h": "Got a messy Excel?", "talk.p": "Send a sample. I'll tell you what can be automated.", "talk.b": "Chat on WhatsApp",
+ "talk.wa": "Hi Bagus, I have an Excel/report process I'd like to automate.",
+ "work.eb": "Selected work", "work.h": "Case studies",
+ "work.p": "Real manufacturing problems on simulated or anonymized data, plus public datasets. Each has a full report, code, and a one-page PDF.",
+ cs: "Case study", code: "Code",
+ "apps.eb": "Built & used", "apps.h": "Web apps", "apps.p": "Tools for the production floor, interactive learning platforms, and language apps I use every day.",
+ allApps: "All", open: "Open app",
+ "all.eb": "Full portfolio", allT: n => `All ${n} analytics projects`, "all.p": "Grouped by industry. Search or filter, then open a project.",
+ ph: "Search title, tool, or question…", stAll: "All", stDone: "Published", stWip: "In progress / design",
+ cnt: (n, t) => n === t ? `Showing all ${t} projects` : `Showing ${n} of ${t} projects`, empty: "No project matches. Try another word or clear the filter.",
+ skill: "Skill", clear: "Clear filter",
+ status: { done: "Published", "in-progress": "In progress", design: "Design ready", planned: "Planned" },
+ cat: { manufacturing: "Manufacturing", retail: "E-commerce & Retail", tech: "Tech & Energy", weather: "Weather", property: "Property", media: "Media & Social", career: "Job Market", aviation: "Aviation" },
+ dtype: { public: "Public data", sim: "Simulated data", own: "Anonymized work data", tbd: "Data TBD" },
+ "svc.eb": "Services", "svc.h": "Hire me for a project", "svc.p": "For manufacturing and operations teams that run on Excel and copy-paste.",
+ ask: "Ask about this", askWa: t => `Hi Bagus, I'm interested in: ${t}`, examples: "Examples",
+ "end.h": "Let's build something useful.", "end.p": "Hiring for a data role, or need a dashboard, automation, or internal tool? Based in Indonesia (UTC+7), open to remote.",
+ wa: "Hi Bagus, I found your portfolio and would like to discuss a project.", mail: "Portfolio inquiry",
+ vwT: "Welcome! Choose a view", vwP: "This portfolio has a new design. During the transition you can still use the old one.", vwNewT: "New view", vwNewS: "Case studies, web apps, services · EN / ID / 中文", vwOldT: "Old view", vwOldS: "The previous design · EN / ID", vwRem: "Remember my choice", toClassic: "Switch to old view",
+ foot: y => `© ${y} Bagus Bernadi · Plain HTML, CSS, and JavaScript on GitHub Pages`, top: "Back to top", menu: "Menu"
+},
+id: {
+ "nav.work": "Karya", "nav.apps": "Aplikasi", "nav.all": "Semua project", "nav.svc": "Jasa", "nav.cta": "Ayo kerja sama",
+ "hero.hi": "Halo, saya Bagus 👋", "hero.h1": "Data analyst dengan cara pandang process engineer.",
+ "hero.p": "Saya mencari penyebab sebenarnya dari yield loss, defect, dan rework, lalu membangun dashboard dan tools agar perbaikannya bertahan.",
+ "hero.b1": "Lihat karya saya", "hero.b2": "Pakai jasa saya",
+ "n.p": "project analisis data", nD: d => `${d} sudah terbit dengan laporan lengkap`, "n.a": "web app dibuat", "n.as": "kerja, belajar & harian",
+ "shot.k": "Aplikasi unggulan", "shot.p": "Pengganti Excel output harian operator di lantai produksi.",
+ "open.h": "Tersedia", "open.p": "Terbuka untuk posisi Data Analyst (Indonesia atau remote) dan project freelance.",
+ "stack.h": "Skill paling sering dipakai · klik untuk melihat project-nya",
+ "talk.h": "Punya Excel yang berantakan?", "talk.p": "Kirim contohnya. Saya beri tahu bagian mana yang bisa diotomasi.", "talk.b": "Chat via WhatsApp",
+ "talk.wa": "Halo Bagus, saya punya proses Excel/laporan yang ingin diotomasi.",
+ "work.eb": "Karya pilihan", "work.h": "Studi kasus",
+ "work.p": "Masalah manufaktur nyata dengan data simulasi atau yang dianonimkan, plus dataset publik. Masing-masing punya laporan lengkap, kode, dan PDF satu halaman.",
+ cs: "Studi kasus", code: "Kode",
+ "apps.eb": "Dibuat & dipakai", "apps.h": "Web app", "apps.p": "Tools untuk lantai produksi, platform belajar interaktif, dan aplikasi bahasa yang saya pakai setiap hari.",
+ allApps: "Semua", open: "Buka aplikasi",
+ "all.eb": "Portofolio lengkap", allT: n => `Semua ${n} project analisis data`, "all.p": "Dikelompokkan per industri. Cari atau filter, lalu buka project-nya.",
+ ph: "Cari judul, tools, atau pertanyaan…", stAll: "Semua", stDone: "Terbit", stWip: "Dikerjakan / rancangan",
+ cnt: (n, t) => n === t ? `Menampilkan semua ${t} project` : `Menampilkan ${n} dari ${t} project`, empty: "Tidak ada project yang cocok. Coba kata lain atau hapus filter.",
+ skill: "Skill", clear: "Hapus filter",
+ status: { done: "Terbit", "in-progress": "Dikerjakan", design: "Rancangan siap", planned: "Direncanakan" },
+ cat: { manufacturing: "Manufaktur", retail: "E-commerce & Retail", tech: "Teknologi & Energi", weather: "Cuaca", property: "Properti", media: "Media & Sosial", career: "Pasar Kerja", aviation: "Penerbangan" },
+ dtype: { public: "Data publik", sim: "Data simulasi", own: "Data kerja dianonimkan", tbd: "Data belum dipilih" },
+ "svc.eb": "Jasa", "svc.h": "Pakai jasa saya untuk project Anda", "svc.p": "Untuk tim manufaktur dan operasional yang masih bergantung pada Excel dan copy-paste.",
+ ask: "Tanya soal ini", askWa: t => `Halo Bagus, saya tertarik dengan: ${t}`, examples: "Contoh",
+ "end.h": "Mari bangun sesuatu yang berguna.", "end.p": "Sedang merekrut untuk posisi data, atau butuh dashboard, otomasi, atau tools internal? Berbasis di Indonesia (UTC+7), terbuka untuk remote.",
+ wa: "Halo Bagus, saya melihat portofolio Anda dan ingin mendiskusikan sebuah project.", mail: "Pertanyaan dari portofolio",
+ vwT: "Selamat datang! Pilih tampilan", vwP: "Portofolio ini punya desain baru. Selama masa transisi, tampilan lama masih bisa dipakai.", vwNewT: "Tampilan baru", vwNewS: "Studi kasus, web app, jasa · EN / ID / 中文", vwOldT: "Tampilan lama", vwOldS: "Desain sebelumnya · EN / ID", vwRem: "Ingat pilihan saya", toClassic: "Pindah ke tampilan lama",
+ foot: y => `© ${y} Bagus Bernadi · HTML, CSS, dan JavaScript murni di GitHub Pages`, top: "Kembali ke atas", menu: "Menu"
+},
+zh: {
+ "nav.work": "作品", "nav.apps": "应用", "nav.all": "全部项目", "nav.svc": "服务", "nav.cta": "合作洽谈",
+ "hero.hi": "你好，我是 Bagus 👋", "hero.h1": "具备工艺工程师视角的数据分析师。",
+ "hero.p": "我找出良率损失、不良和返工背后的真正原因，再搭建看板和工具，让改善成果持续有效。",
+ "hero.b1": "查看作品", "hero.b2": "委托项目",
+ "n.p": "个数据分析项目", nD: d => `其中 ${d} 个已发布完整报告`, "n.a": "个 Web 应用", "n.as": "工作、学习与日常使用",
+ "shot.k": "精选应用", "shot.p": "在生产现场取代作业员每日产量 Excel。",
+ "open.h": "可接洽", "open.p": "寻求数据分析师职位（印尼或远程）及自由职业项目。",
+ "stack.h": "最常用技能 · 点击查看相关项目",
+ "talk.h": "Excel 太乱？", "talk.p": "发个样本给我，我告诉您哪些可以自动化。", "talk.b": "WhatsApp 联系",
+ "talk.wa": "您好 Bagus，我有一个 Excel/报表流程想要自动化。",
+ "work.eb": "精选作品", "work.h": "案例研究",
+ "work.p": "使用模拟或匿名数据的真实制造业问题，以及公开数据集。每个案例都有完整报告、代码和一页 PDF。",
+ cs: "查看案例", code: "代码",
+ "apps.eb": "开发并使用中", "apps.h": "Web 应用", "apps.p": "生产现场工具、互动学习平台，以及我每天使用的语言应用。",
+ allApps: "全部", open: "打开应用",
+ "all.eb": "完整作品集", allT: n => `全部 ${n} 个数据分析项目`, "all.p": "按行业分组。可搜索或筛选，再打开项目。",
+ ph: "搜索标题、工具或问题…", stAll: "全部", stDone: "已发布", stWip: "进行中 / 设计中",
+ cnt: (n, t) => n === t ? `显示全部 ${t} 个项目` : `显示 ${n} / ${t} 个项目`, empty: "没有匹配的项目。请换个关键词或清除筛选。",
+ skill: "技能", clear: "清除筛选",
+ status: { done: "已发布", "in-progress": "进行中", design: "设计完成", planned: "计划中" },
+ cat: { manufacturing: "制造业", retail: "电商与零售", tech: "科技与能源", weather: "气象", property: "房地产", media: "媒体与社交", career: "就业市场", aviation: "航空" },
+ dtype: { public: "公开数据", sim: "模拟数据", own: "匿名工作数据", tbd: "数据待定" },
+ "svc.eb": "服务", "svc.h": "委托我做项目", "svc.p": "适合仍依赖 Excel 和复制粘贴的制造与运营团队。",
+ ask: "咨询此服务", askWa: t => `您好 Bagus，我对以下服务感兴趣：${t}`, examples: "案例",
+ "end.h": "一起做点有用的东西。", "end.p": "正在招聘数据岗位，或需要看板、自动化、内部工具？我在印尼（UTC+7），可远程合作。",
+ wa: "您好 Bagus，我看了您的作品集，想和您讨论一个项目。", mail: "作品集咨询",
+ vwT: "欢迎！请选择版本", vwP: "本作品集已改版。过渡期间仍可使用旧版。", vwNewT: "新版", vwNewS: "案例研究、Web 应用、服务 · EN / ID / 中文", vwOldT: "旧版", vwOldS: "之前的设计 · EN / ID", vwRem: "记住我的选择", toClassic: "切换到旧版",
+ foot: y => `© ${y} Bagus Bernadi · 纯 HTML、CSS 和 JavaScript，托管于 GitHub Pages`, top: "回到顶部", menu: "菜单", sep: "。"
+}};
 
-"cat.manufacturing":"Manufaktur","cat.retail":"E-commerce & Retail","cat.tech":"Teknologi & Energi","cat.weather":"Cuaca & Lingkungan","cat.property":"Properti & Ekonomi","cat.media":"Media & Sosial","cat.career":"Pasar Kerja & Karier","cat.aviation":"Penerbangan & Compliance",
-"btn.live":"Buka project","data.l":"Data","dt.public":"Publik","dt.sim":"Simulasi","dt.own":"Kumpulan sendiri","dt.tbd":"Belum dipilih","btn.code":"Kode","btn.soon":"Segera hadir",
-"about.title":"Tentang",
-"about.p1":"Saya bekerja di lini produksi komponen teknologi tinggi: memantau output, yield, rework, dan defect, melatih operator baru, serta membuat alat bantu di Excel dan Python agar pelaporan lebih cepat dan andal.",
-"about.p2":"Project-project ini menunjukkan cara saya mengolah data: menetapkan pertanyaan bisnis lebih dulu, membersihkan dan memvalidasi data, memakai SQL dan statistik hanya jika menjawab pertanyaan, lalu menutup dengan rekomendasi yang jelas dan estimasi dampak.",
-"about.h3":"Cara membaca setiap project",
-"about.l1":"<b>Problem</b>: pertanyaan bisnis.","about.l2":"<b>Data</b>: sumber, ukuran, dan langkah cleaning.","about.l3":"<b>Analysis</b>: metode, kode, dan temuan.","about.l4":"<b>Recommendation</b>: tindakan berdasarkan temuan.","about.l5":"<b>Impact</b>: rumus dengan asumsi yang tertulis jelas.",
-"about.note":"Project manufaktur memakai data simulasi atau data yang dianonimkan karena data pabrik bersifat rahasia. Angka dampak diberi label \"estimated\" atau \"simulated\".",
-"skills.title":"Keahlian","skills.sub":"Istilah bergaris bawah: arahkan kursor atau ketuk untuk penjelasan singkat.","tip.used":n=>`Dipakai di ${n} project →`,
-"sk":[["SQL","DuckDB, SQLite, PostgreSQL, BigQuery. CTE, window function, view, data test."],["Python","pandas, NumPy, Polars, Plotly, scikit-learn, skrip dan notebook."],["Statistik","Uji hipotesis, confidence interval, SPC dan control chart, Cp/Cpk, A/B testing."],["Excel","Rumus, data validation, proteksi sheet, Power Query, cek silang hasil."],["Dashboard","Streamlit, Looker Studio, Power BI. Desain KPI untuk pembaca non-teknis."],["Data pipeline","ETL, parsing file berantakan, penjadwalan GitHub Actions, dbt."],["AI untuk analitik","Klasifikasi dan ekstraksi dengan LLM, natural language to SQL beserta evaluasinya."],["Domain manufaktur","Yield, rework, Pareto defect, cycle time, QCC, pelatihan operator."]],
-"contact.title":"Kontak","contact.sub":"Terbuka untuk posisi Data Analyst di Indonesia maupun luar negeri.",
-"foot":"Dibuat dengan HTML, CSS, dan JavaScript murni. Di-hosting di GitHub Pages."}};
-const CATH={manufacturing:"--navyH",retail:"--roseH",tech:"--plumH",weather:"--tealH",property:"--amberH",media:"--roseH",career:"--skyH",aviation:"--plumH"};
-const STO={done:0,"in-progress":1,design:2,planned:3};
-const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const gh=PR.github||"";
-const liveURL=p=>p.live||`https://${gh}.github.io/${p.slug}/`,repoURL=p=>p.repo||`https://github.com/${gh}/${p.slug}`;
-const hasLink=p=>true;
-// Skill taxonomy: derived from the free-text "tools" field. A project may also set "skills": [...] to override.
-const SK=[["db","SQL",/\bSQL\b|DuckDB|SQLite|PostgreSQL|BigQuery|dbt/i],["db","DuckDB",/DuckDB/i],["db","SQLite",/SQLite/i],["db","PostgreSQL",/PostgreSQL/i],["db","BigQuery",/BigQuery/i],["db","dbt",/\bdbt/i],
-["py","Python",/Python/i],["py","pandas",/pandas/i],["py","NumPy",/NumPy/i],["py","Polars",/Polars/i],["py","SciPy",/SciPy/i],["py","statsmodels",/statsmodels/i],["py","scikit-learn",/scikit-learn/i],["py","Plotly",/plotly/i],["py","matplotlib",/matplotlib/i],["py","Jupyter",/Jupyter/i],["py","pytest",/pytest/i],
-["bi","Streamlit",/Streamlit/i],["bi","Power BI",/Power BI/i],["bi","Looker Studio",/Looker/i],["bi","Excel",/Excel/i],["bi","Power Query",/Power Query/i],["bi","HTML dashboard",/dashboard HTML|HTML dashboard/i],
-["eng","GitHub Actions",/GitHub Actions/i],["eng","Docker",/Docker/i],["eng","LLM",/LLM|Claude|Gemini|LangChain|LangGraph/i],["eng","NLP",/NLP|sentiment/i],["eng","Web scraping",/Playwright|requests|scraping/i]];
-P.forEach(p=>{p._sk=Array.isArray(p.skills)?p.skills:SK.filter(([, ,re])=>re.test(p.tools)).map(([,n])=>n)});
-const SKC=n=>P.filter(p=>p._sk.includes(n)).length;
-const SKG=["db","py","bi","eng"];
-// chip colors: one hue per skill group, darker shades alternate inside a group
-const GH={db:"--navyH",py:"--tealH",bi:"--amberH",eng:"--plumH"},SHADE=[0,22,38];
-const SKCOL={};SKG.forEach(g=>SK.filter(s=>s[0]===g).forEach((s,i)=>{SKCOL[s[1]]=`color-mix(in srgb,var(${GH[g]}) ${100-SHADE[i%3]}%,#000)`}));
-const skc=n=>SKCOL[n]||"var(--blue)";
-// Glossary for the Skills cards: platforms and acronyms get a dotted underline and a popover.
-// key = text as written in "sk"; f = what the acronym stands for; sk = name in SK (adds the "used in N projects" link); h = match in card titles only
-const GL={
-"SQL":{h:1,f:"Structured Query Language",en:"The standard language for querying and shaping data in a database.",id:"Bahasa standar untuk mengambil dan mengolah data di database."},
-"DuckDB":{sk:"DuckDB",en:"Fast analytics SQL database that runs inside a script with no server; reads CSV and Parquet files directly.",id:"Database SQL analitik yang berjalan di dalam skrip tanpa server; bisa langsung membaca file CSV dan Parquet."},
-"SQLite":{sk:"SQLite",en:"Lightweight SQL database stored as a single file; common in small apps.",id:"Database SQL ringan yang tersimpan dalam satu file; umum dipakai di aplikasi kecil."},
-"PostgreSQL":{sk:"PostgreSQL",en:"Open-source server database (\"Postgres\") for multi-user applications.",id:"Database server open-source (\"Postgres\") untuk aplikasi dengan banyak pengguna."},
-"BigQuery":{sk:"BigQuery",en:"Google Cloud data warehouse: runs SQL over large datasets with no server to manage.",id:"Data warehouse Google Cloud: menjalankan SQL pada data besar tanpa perlu mengelola server."},
-"CTE":{f:"Common Table Expression",en:"A named step inside a query (WITH ...) that keeps long queries readable.",id:"Langkah bernama di dalam query (WITH ...) agar query panjang tetap mudah dibaca."},
-"Python":{h:1,en:"General-purpose programming language; the main language for data analysis.",id:"Bahasa pemrograman serbaguna; bahasa utama untuk analisis data."},
-"pandas":{sk:"pandas",en:"Python library for tables (DataFrames): cleaning, joining, and grouping data.",id:"Library Python untuk tabel (DataFrame): membersihkan, menggabungkan, dan mengelompokkan data."},
-"NumPy":{f:"Numerical Python",sk:"NumPy",en:"Fast arrays and math; the foundation of most Python data libraries.",id:"Array dan perhitungan numerik yang cepat; fondasi sebagian besar library data Python."},
-"Polars":{sk:"Polars",en:"Newer DataFrame library, faster than pandas on large data.",id:"Library DataFrame yang lebih baru, lebih cepat dari pandas untuk data besar."},
-"Plotly":{sk:"Plotly",en:"Interactive charts (zoom, hover) for notebooks, web pages, and dashboards.",id:"Grafik interaktif (zoom, hover) untuk notebook, halaman web, dan dashboard."},
-"scikit-learn":{sk:"scikit-learn",en:"Machine-learning library: clustering, classification, regression, and model evaluation.",id:"Library machine learning: clustering, klasifikasi, regresi, dan evaluasi model."},
-"notebooks":{f:"Jupyter Notebook",sk:"Jupyter",en:"A document that mixes code, results, and notes; used to explore data step by step.",id:"Dokumen yang menggabungkan kode, hasil, dan catatan; dipakai untuk menelusuri data langkah demi langkah."},
-"SPC":{f:"Statistical Process Control",en:"Monitoring a process with statistics to separate normal variation from real problems.",id:"Memantau proses dengan statistik untuk memisahkan variasi normal dari masalah yang nyata."},
-"Cp/Cpk":{f:"Process Capability index",en:"How well a process fits its spec limits. Cp looks at spread only; Cpk also at centering. 1.33 or more is commonly treated as capable.",id:"Seberapa baik proses masuk batas spesifikasi. Cp hanya melihat lebar sebaran; Cpk juga posisi tengahnya. Nilai 1,33 ke atas umumnya dianggap capable."},
-"A/B testing":{en:"Comparing two versions on random groups to see which one really performs better.",id:"Membandingkan dua versi pada kelompok acak untuk melihat mana yang benar-benar lebih baik."},
-"Power Query":{sk:"Power Query",en:"Excel and Power BI tool to import and clean data in recorded, repeatable steps.",id:"Fitur Excel dan Power BI untuk impor dan membersihkan data dengan langkah yang terekam dan bisa diulang."},
-"Streamlit":{sk:"Streamlit",en:"Python framework that turns a script into an interactive web app or dashboard.",id:"Framework Python yang mengubah skrip menjadi aplikasi web atau dashboard interaktif."},
-"Looker Studio":{sk:"Looker Studio",en:"Google's free dashboard tool (formerly Data Studio); connects to Sheets and BigQuery.",id:"Tool dashboard gratis dari Google (dulu Data Studio); terhubung ke Sheets dan BigQuery."},
-"Power BI":{f:"BI = Business Intelligence",sk:"Power BI",en:"Microsoft's dashboard and reporting tool.",id:"Tool dashboard dan pelaporan dari Microsoft."},
-"KPI":{f:"Key Performance Indicator",en:"The headline number that shows whether a goal is met, e.g. yield %.",id:"Angka utama yang menunjukkan apakah target tercapai, misalnya yield %."},
-"ETL":{f:"Extract, Transform, Load",en:"Pulling data from its sources, cleaning it, and loading it into a database.",id:"Mengambil data dari sumbernya, membersihkannya, lalu memuatnya ke database."},
-"GitHub Actions":{sk:"GitHub Actions",en:"GitHub's automation service: runs scripts on a schedule or on every code change.",id:"Layanan otomasi GitHub: menjalankan skrip sesuai jadwal atau setiap ada perubahan kode."},
-"dbt":{f:"data build tool",sk:"dbt",en:"Builds analytics tables from SQL models, with built-in tests and documentation.",id:"Membangun tabel analitik dari model SQL, lengkap dengan test dan dokumentasi."},
-"AI":{h:1,f:"Artificial Intelligence",en:"Software that does tasks that normally need human judgment, such as reading text.",id:"Perangkat lunak yang mengerjakan tugas yang biasanya butuh penilaian manusia, misalnya membaca teks."},
-"LLM":{f:"Large Language Model",sk:"LLM",en:"AI model that reads and writes text, such as Claude or GPT.",id:"Model AI yang membaca dan menulis teks, seperti Claude atau GPT."},
-"QCC":{f:"Quality Control Circle",en:"Small team of workers solving a quality problem with structured steps (PDCA).",id:"Kelompok kecil karyawan yang menyelesaikan masalah kualitas dengan langkah terstruktur (PDCA)."}};
-// one hue per Skills card, in "sk" order; no two neighbours share a hue in the 4-, 2- or 1-column grid
-const SKH=["--navyH","--tealH","--plumH","--amberH","--roseH","--navyH","--tealH","--plumH"];
-const GLA={"notebook":"notebooks"};// Indonesian spelling -> glossary key
-const glRe=h=>new RegExp(`(?<![\\w-])(${[...Object.keys(GL).filter(k=>h||!GL[k].h),...Object.keys(GLA)].sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\\/]/g,"\\$&")).join("|")})(?![\\w-])([.,;:)]*)`,"g");
-const GLR=[glRe(0),glRe(1)];
-// trailing punctuation stays on the same line as the term
-const glMark=(s,h)=>s.replace(GLR[h?1:0],(_,m,p)=>`<span class="nw"><button type="button" class="term" data-gl="${GLA[m]||m}" aria-expanded="false">${m}</button>${p}</span>`);
-const tip=document.createElement("div");tip.id="tip";tip.setAttribute("role","tooltip");tip.hidden=true;document.body.appendChild(tip);
-let tipFor=null,tipT=0;
-function showTip(b){clearTimeout(tipT);if(tipFor===b&&!tip.hidden)return;const k=b.dataset.gl,g=GL[k],n=g.sk?SKC(g.sk):0;
- tip.innerHTML=`<b>${esc(k)}</b>${g.f?`<span class="tf">${esc(g.f)}</span>`:""}<p>${esc(g[lang]||g.en)}</p>${n?`<button type="button" class="tl" data-skf="${esc(g.sk)}">${T[lang]["tip.used"](n)}</button>`:""}`;
- tip.style.setProperty("--h",getComputedStyle(b).getPropertyValue("--h")||"var(--blue)");
- if(tipFor)tipFor.setAttribute("aria-expanded","false");tipFor=b;b.setAttribute("aria-expanded","true");tip.hidden=false;
- const r=b.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,vw=document.documentElement.clientWidth;
- const x=Math.max(8,Math.min(r.left+r.width/2-w/2,vw-w-8));let y=r.bottom+8;if(y+h>innerHeight-8&&r.top-h-8>0)y=r.top-h-8;
- tip.style.left=x+scrollX+"px";tip.style.top=y+scrollY+"px"}
-function hideTip(){clearTimeout(tipT);tip.hidden=true;if(tipFor)tipFor.setAttribute("aria-expanded","false");tipFor=null}
-const STC={done:"var(--tealH)","in-progress":"var(--amberH)",design:"var(--navyH)",planned:"var(--mut)"};
-const CHC={category:v=>`var(${CATH[v]||"--navyH"})`,status:v=>STC[v]};
+// ---- state ----
+const qs = new URLSearchParams(location.search);
+const store = { get: k => { try { return localStorage.getItem(k) } catch (e) { return null } }, set: (k, v) => { try { localStorage.setItem(k, v) } catch (e) {} } };
+let lang = qs.get("lang") || store.get("lang") || (() => { const n = (navigator.language || "").toLowerCase(); return n.startsWith("id") ? "id" : n.startsWith("zh") ? "zh" : "en"; })();
+if (!T[lang]) lang = "en";
+let q = (qs.get("q") || "").toLowerCase(), skill = qs.get("skill"), st = "all", g = "all";
+const L = x => (x && typeof x === "object" && !Array.isArray(x)) ? (x[lang] ?? x.en) : x;
+const t = k => T[lang][k] ?? T.en[k];
+const metric = f => lang === "id" ? (f.metricId || f.metric) : f.metric;
+const wa = msg => `https://wa.me/${(PR.whatsapp || "").replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
+const proof = x => {
+  if (typeof x === "number") { const p = byNo(x); return p ? { t: `#${p.no} ${p.title}`, u: live(p) } : null; }
+  const a = app(x); return a ? { t: a.title, u: a.live || a.repo } : null;
+};
+const skc = {}; P.forEach(p => (p.skills || []).forEach(s => skc[s] = (skc[s] || 0) + 1));
+const topSk = Object.entries(skc).sort((a, b) => b[1] - a[1]).slice(0, 10);
+if (skill && !skc[skill]) skill = null;
+const ICON = ['<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 7h10M4 12h16M4 17h7"/><path d="M17 4l3 3-3 3"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M3 9h18"/></svg>'];
 
-let lang="en";
-try{const u=new URLSearchParams(location.search).get("lang");lang=(u==="id"||u==="en")?u:(localStorage.getItem("lang")||((navigator.language||"").startsWith("id")?"id":"en"))}catch(e){}
-const S={q:"",category:"*",status:"*",sort:"no",skills:[]};
-try{const u=new URLSearchParams(location.search).get("skill");if(u){S.skills=u.split(",").map(x=>x.trim()).filter(x=>SK.some(s=>s[1].toLowerCase()===x.toLowerCase())).map(x=>SK.find(s=>s[1].toLowerCase()===x.toLowerCase())[1]);if(S.skills.length)S.sort="skill"}}catch(e){}
-const hit=p=>S.skills.filter(s=>p._sk.includes(s)).length;
-function toggleSkill(n){const i=S.skills.indexOf(n);i<0?S.skills.push(n):S.skills.splice(i,1);if(S.skills.length&&S.sort==="no")S.sort="skill";if(!S.skills.length&&S.sort==="skill")S.sort="no";
- syncURL();render()}
-function syncURL(){try{const u=new URL(location.href);S.skills.length?u.searchParams.set("skill",S.skills.join(",")):u.searchParams.delete("skill");history.replaceState(null,"",u)}catch(e){}}
-const t=k=>T[lang][k]??T.en[k]??k;
-
-function chips(el,key,vals,labelFn){
- el.innerHTML=[["*",t("f.all"),P.length]].concat(vals.map(v=>[v,labelFn(v),P.filter(p=>p[key]===v).length])).map(([v,l,n])=>`<button type="button" class="chipb" data-v="${v}" style="--c:${v==="*"?"var(--blue)":CHC[key](v)}" aria-pressed="${S[key]===v}">${esc(l)}<i>${n}</i></button>`).join("");
- el.onclick=e=>{const b=e.target.closest(".chipb");if(!b)return;S[key]=b.dataset.v;render()};
+// ---- renderers ----
+function renderApps() {
+  const gs = ["all", ...Object.keys(S.groups || {})];
+  $("appF").innerHTML = gs.map(k => `<button class="fchip" type="button" data-g="${k}" aria-pressed="${k === g}">${k === "all" ? t("allApps") : esc(L(S.groups[k]))}</button>`).join("");
+  $("apps2").innerHTML = S.apps.filter(a => g === "all" || a.group === g).map(a =>
+    `<a class="ac ${a.group === "work" && g === "all" ? "big" : ""}" href="${a.live || a.repo}" target="_blank" rel="noopener"><img src="assets/thumbs/${a.id}.jpg" alt="${esc(a.title)}" loading="lazy"><div class="b"><span class="g">${esc(L(S.groups[a.group]))} · ${esc(L(a.tag))}</span><h3>${esc(a.title)}</h3><p>${esc(L(a.desc))}</p></div></a>`).join("");
 }
-function uniq(k,order){const s=[...new Set(P.map(p=>p[k]))];return order?s.sort((a,b)=>order[a]-order[b]):s.sort((a,b)=>P.filter(p=>p[k]===b).length-P.filter(p=>p[k]===a).length)}
-
-function render(){
- document.documentElement.lang=lang;
- document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.innerHTML=v});
- document.querySelectorAll("[data-ph]").forEach(el=>el.placeholder=t(el.dataset.ph));
- document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
- $("role").textContent=(PR.role&&PR.role[lang])||"";
- $("brand").textContent=PR.name||"";
- const n=s=>P.filter(p=>s.includes(p.status)).length;
- $("stats").innerHTML=[[P.length,"st.total","--navyH"],[n(["done"]),"st.ready","--amberH"],[n(["in-progress","design"]),"st.prog","--plumH"]]
-  .map(([v,k,h])=>`<div class="stat" style="--h:var(${h})"><b>${v}</b><span>${t(k)}</span></div>`).join("");
- $("legend").innerHTML=["done","in-progress","design","planned"].map(s=>`<span><span class="badge st-${s}">${t("status."+s)}</span>${t("lg."+s)}</span>`).join("");
- $("fSkill").innerHTML=`<div class="sh"><b>${t("f.skill")}</b><span>${t("f.skillh")}</span>${S.skills.length?`<button type="button" class="clr">${t("f.clear")}</button>`:""}</div>`+
-  SKG.map(g=>`<div class="row"><span class="gl">${t("g."+g)}</span>${SK.filter(s=>s[0]===g&&SKC(s[1])).map(s=>`<button type="button" class="chipb sk" data-sk="${esc(s[1])}" style="--c:${skc(s[1])}" aria-pressed="${S.skills.includes(s[1])}">${esc(s[1])}<i>${SKC(s[1])}</i></button>`).join("")}</div>`).join("");
- chips($("fCat"),"category",uniq("category"),v=>t("cat."+v));
- chips($("fStatus"),"status",uniq("status",STO),v=>t("status."+v));
- const q=S.q.trim().toLowerCase();
- let L=P.filter(p=>(S.category==="*"||p.category===S.category)&&(S.status==="*"||p.status===S.status)&&(!S.skills.length||hit(p)>0)&&
-  (!q||[p.title,p.tools,p.question.en,p.question.id,p.data?p.data.en+' '+p.data.id:'',t("cat."+p.category),"#"+p.no].join(" ").toLowerCase().includes(q)));
- L.sort((a,b)=>S.sort==="skill"?hit(b)-hit(a)||a.no-b.no:S.sort==="status"?STO[a.status]-STO[b.status]||a.no-b.no:a.no-b.no);
- $("count").textContent=T[lang].count(L.length,P.length);
- $("empty").hidden=L.length>0;
- $("grid").innerHTML=L.map(p=>`<article class="pc" style="--h:var(${CATH[p.category]||"--navyH"})" id="p${p.no}">
-  <div class="hd"><span class="no">#${String(p.no).padStart(2,"0")}</span><span class="cat">${esc(t("cat."+p.category))}</span></div>
-  <h3>${esc(p.title)}</h3>
-  <p class="qq">${esc(p.question[lang]||p.question.en)}</p>
-  <div class="tools" title="${esc(p.tools)}">${p._sk.map(s=>`<button type="button" data-sk="${esc(s)}" style="--c:${skc(s)}" class="${S.skills.includes(s)?"on":""}" aria-pressed="${S.skills.includes(s)}">${esc(s)}</button>`).join("")}</div>
-  ${p.data?`<p class="ds"><span class="dt dt-${p.data.type}">${t("dt."+p.data.type)}</span>${p.data.url?`<a href="${esc(p.data.url)}" target="_blank" rel="noopener">${esc(p.data[lang]||p.data.en)}</a>`:esc(p.data[lang]||p.data.en)}</p>`:""}
-  ${S.skills.length?`<span class="mt">${T[lang]["f.match"](hit(p),S.skills.length)}</span>`:""}
-  <div class="meta"><span class="badge st-${p.status}">${t("status."+p.status)}</span></div>
-  <div class="links">${hasLink(p)?`<a class="live" href="${liveURL(p)}" target="_blank" rel="noopener">${t("btn.live")}</a><a class="code" href="${repoURL(p)}" target="_blank" rel="noopener">${t("btn.code")}</a>`:`<span>${t("btn.soon")}</span>`}</div>
- </article>`).join("");
- hideTip();
- $("skillGrid").innerHTML=t("sk").map(([h,d],i)=>`<div class="card" style="--h:var(${SKH[i%SKH.length]})"><h3>${glMark(esc(h),1)}</h3><p>${glMark(esc(d))}</p></div>`).join("");
- const c=[];if(gh)c.push(`<a class="btn pri" href="https://github.com/${gh}" target="_blank" rel="noopener">GitHub</a>`);
- if(PR.linkedin)c.push(`<a class="btn" href="${esc(PR.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`);
- if(PR.email)c.push(`<a class="btn" href="mailto:${esc(PR.email)}">Email</a>`);
- $("contactLinks").innerHTML=c.join("");
- $("ghLink").href=`https://github.com/${gh}`;
- $("sort").value=S.sort;
+function renderProjects() {
+  $("stF").innerHTML = [["all", t("stAll")], ["done", t("stDone")], ["wip", t("stWip")]].map(([k, l]) => `<button class="fchip" type="button" data-st="${k}" aria-pressed="${k === st}">${l}</button>`).join(" ");
+  $("skSel").innerHTML = skill ? `<span class="sel">${t("skill")}: ${esc(skill)} <button type="button" id="skX" aria-label="${t("clear")}">×</button></span>` : "";
+  const r = P.filter(p => (st === "all" || (st === "done" ? p.status === "done" : p.status !== "done"))
+    && (!skill || (p.skills || []).includes(skill))
+    && (!q || [p.title, p.tools, L(p.question), (p.skills || []).join(" "), "#" + p.no].join(" ").toLowerCase().includes(q)));
+  const filtered = r.length !== P.length;
+  $("cnt").textContent = t("cnt")(r.length, P.length);
+  const cats = [...new Set(P.map(p => p.category))].sort((a, b) => P.filter(p => p.category === b).length - P.filter(p => p.category === a).length);
+  const html = cats.map((k, i) => {
+    const rr = r.filter(p => p.category === k); if (!rr.length) return "";
+    return `<details ${filtered || i === 0 ? "open" : ""}><summary>${esc(t("cat")[k] || k)}<span class="c">${rr.length}</span></summary><div class="pl">${rr.map(p =>
+      `<a class="pi" href="${live(p)}" target="_blank" rel="noopener" title="${esc(L(p.question))}"><span class="n">#${String(p.no).padStart(2, "0")}</span><span><b>${esc(p.title)}</b><small>${esc((p.skills || []).slice(0, 4).join(" · "))}</small></span><span class="s ${p.status === "done" ? "d" : "w"}">${t("status")[p.status]}</span></a>`).join("")}</div></details>`;
+  }).join("");
+  $("acc").innerHTML = html || `<div class="empty">${t("empty")}</div>`;
+  const x = $("skX"); if (x) x.onclick = () => { skill = null; renderProjects(); };
 }
-document.querySelector(".lang").onclick=e=>{const b=e.target.closest("button");if(!b)return;lang=b.dataset.lang;try{localStorage.setItem("lang",lang)}catch(x){}render()};
-$("q").oninput=e=>{S.q=e.target.value;render()};
-document.addEventListener("click",e=>{const b=e.target.closest("[data-sk]");if(b){toggleSkill(b.dataset.sk);return}if(e.target.closest("#fSkill .clr")){S.skills=[];if(S.sort==="skill")S.sort="no";syncURL();render()}});
-$("sort").onchange=e=>{S.sort=e.target.value;render()};
-// glossary popover: hover or keyboard focus on desktop, tap on touch; the link filters projects by that skill
-document.addEventListener("mouseover",e=>{const b=e.target.closest(".term");if(b)showTip(b);else if(e.target.closest("#tip"))clearTimeout(tipT)});
-document.addEventListener("mouseout",e=>{if(e.target.closest(".term,#tip"))tipT=setTimeout(hideTip,250)});
-document.addEventListener("focusin",e=>{const b=e.target.closest(".term");if(b)showTip(b);else if(e.target.closest("#tip"))clearTimeout(tipT)});
-document.addEventListener("focusout",e=>{if(e.target.closest(".term,#tip"))tipT=setTimeout(hideTip,250)});
-document.addEventListener("click",e=>{const b=e.target.closest(".term");if(b){showTip(b);return}
- const f=e.target.closest("[data-skf]");if(f){S.skills=[f.dataset.skf];S.sort="skill";syncURL();render();$("projects").scrollIntoView({behavior:"smooth"});return}
- if(!e.target.closest("#tip"))hideTip()});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&tipFor){const b=tipFor;hideTip();b.focus()}});
-addEventListener("resize",hideTip);
-$("year").textContent="© "+new Date().getFullYear()+" "+(PR.name||"");
+function render() {
+  document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  document.querySelectorAll("[data-i]").forEach(el => { const v = t(el.dataset.i); if (typeof v === "string") el.textContent = v; });
+  $("nP").textContent = P.length; $("nD").textContent = t("nD")(done); $("nA").textContent = nApps;
+  $("chips").innerHTML = topSk.map(([s, n]) => `<button type="button" data-sk="${esc(s)}">${esc(s)}<b>${n}</b></button>`).join("");
+  $("waT").href = wa(t("talk.wa"));
+  $("feat").innerHTML = S.featured.map(f => { const p = byNo(f.no); if (!p) return ""; return `<article class="fc"><div class="im"><img src="assets/thumbs/${THUMB[f.no] || "mes"}.jpg" alt="${esc(p.title)}" loading="lazy"><span class="badge">${metric(f)}</span></div><div class="b"><span class="m">#${p.no} · ${esc(t("cat")[p.category])} · ${esc(t("dtype")[p.data.type])}</span><h3>${esc(p.title)}</h3><p>${esc(L(f.label))}${t("sep") || ". "}${esc(L(f.point))}</p><div class="act"><a class="btn acc sm" href="${live(p)}" target="_blank" rel="noopener">${t("cs")}</a><a class="btn sm" href="${pdf(p.no)}" target="_blank" rel="noopener">PDF</a><a class="btn sm" href="${repo(p)}" target="_blank" rel="noopener">${t("code")}</a></div></div></article>`; }).join("");
+  renderApps();
+  $("allT").textContent = t("allT")(P.length); $("q").placeholder = t("ph"); $("q").setAttribute("aria-label", t("ph")); $("q").value = q;
+  renderProjects();
+  $("svc").innerHTML = S.services.map((s, i) => `<div class="sv ${i === 1 ? "mid" : ""}"><div class="ic">${ICON[i % 3]}</div><h3>${esc(L(s.title))}</h3><p>${esc(L(s.desc))}</p><ul>${L(s.gets).map(x => `<li>${esc(x)}</li>`).join("")}</ul><p style="font-size:13.5px;color:var(--mut)">${t("examples")}: ${s.proof.map(proof).filter(Boolean).map(x => `<a href="${x.u}" target="_blank" rel="noopener" style="color:var(--acc)">${esc(x.t)}</a>`).join(", ")}</p><a class="btn ${i === 1 ? "acc" : ""}" href="${wa(t("askWa")(L(s.title)))}" target="_blank" rel="noopener">${t("ask")}</a></div>`).join("");
+  $("steps").innerHTML = S.steps.map((s, i) => `<span><b>${i + 1}</b> ${esc(L(s)[0])}</span>`).join("");
+  $("faq").innerHTML = (S.faq || []).map(f => { const [a, b] = L(f); return `<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`; }).join("");
+  $("cb").innerHTML = `<a class="btn wa" href="${wa(t("wa"))}" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="mailto:${PR.email}?subject=${encodeURIComponent(t("mail"))}">Email</a><a class="btn" href="${PR.linkedin}" target="_blank" rel="noopener">LinkedIn</a><a class="btn" href="https://github.com/${gh}" target="_blank" rel="noopener">GitHub</a>`;
+  const ph = (PR.whatsapp || "").replace(/\D/g, ""); $("addr").textContent = `${PR.email}${ph ? " · +" + ph : ""}`;
+  $("totop").setAttribute("aria-label", t("top")); $("menuBtn").setAttribute("aria-label", t("menu"));
+  $("foot").textContent = t("foot")(new Date().getFullYear());
+  $("toClassic").textContent = t("toClassic");
+  ["vwT", "vwP", "vwNewT", "vwNewS", "vwOldT", "vwOldS"].forEach(k => $(k).textContent = t(k)); $("vwRemT").textContent = t("vwRem");
+  document.querySelectorAll("#vwLang [data-l]").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+}
+
+// ---- events ----
+document.querySelector(".lang").onclick = e => {
+  const b = e.target.closest("[data-lang]"); if (!b) return; lang = b.dataset.lang; store.set("lang", lang);
+  try { const u = new URL(location.href); u.searchParams.delete("lang"); history.replaceState(null, "", u); } catch (e) {}
+  render();
+};
+$("chips").onclick = e => { const b = e.target.closest("[data-sk]"); if (!b) return; skill = b.dataset.sk; st = "all"; renderProjects(); $("all").scrollIntoView({ behavior: "smooth" }); };
+$("appF").onclick = e => { const b = e.target.closest("[data-g]"); if (!b) return; g = b.dataset.g; renderApps(); };
+$("stF").onclick = e => { const b = e.target.closest("[data-st]"); if (!b) return; st = b.dataset.st; renderProjects(); };
+$("q").oninput = e => { q = e.target.value.toLowerCase().trim(); renderProjects(); };
+const menuBtn = $("menuBtn"), drawer = $("drawer");
+menuBtn.onclick = () => { const o = drawer.classList.toggle("open"); menuBtn.setAttribute("aria-expanded", o); };
+drawer.onclick = e => { if (e.target.closest("a")) { drawer.classList.remove("open"); menuBtn.setAttribute("aria-expanded", false); } };
+$("totop").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+// scrollspy + back-to-top visibility
+const secs = ["work", "apps", "all", "services"].map(id => $(id));
+let tick = false;
+window.addEventListener("scroll", () => {
+  if (tick) return; tick = true;
+  requestAnimationFrame(() => {
+    $("totop").classList.toggle("show", scrollY > 800);
+    let cur = ""; secs.forEach(s => { if (s.getBoundingClientRect().top < 120) cur = s.id; });
+    document.querySelectorAll(".links a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + cur));
+    tick = false;
+  });
+}, { passive: true });
+
+// ---- view chooser (transition period) ----
+const vw = $("vw"), ss = { get: k => { try { return sessionStorage.getItem(k) } catch (e) { return null } }, set: (k, v) => { try { sessionStorage.setItem(k, v) } catch (e) {} } };
+let lastFocus = null;
+function closeVw() { vw.hidden = true; document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+function choose(v) {
+  if ($("vwRem").checked) store.set("view", v); ss.set("view", v);
+  if (v === "classic") { location.href = "classic/" + location.search + location.hash; return; }
+  closeVw();
+}
+$("vwNew").onclick = () => choose("new");
+$("vwOld").onclick = () => choose("classic");
+$("vwLang").onclick = e => { const b = e.target.closest("[data-l]"); if (b) document.querySelector(`.lang [data-lang="${b.dataset.l}"]`).click(); };
+vw.addEventListener("keydown", e => {
+  if (e.key === "Escape") { ss.set("view", "new"); closeVw(); }
+  if (e.key === "Tab") { const f = [...vw.querySelectorAll("button,input")], i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); } }
+});
+$("toClassic").onclick = () => store.set("view", "classic");
+
 render();
+if (!store.get("view") && !ss.get("view")) { lastFocus = document.activeElement; vw.hidden = false; document.body.style.overflow = "hidden"; setTimeout(() => $("vwNew").focus(), 30); }
+if (skill || q) setTimeout(() => $("all").scrollIntoView(), 50);
 })();

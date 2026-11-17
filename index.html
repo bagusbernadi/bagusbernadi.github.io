@@ -1,96 +1,82 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bagus Bernadi · Data Analyst Portfolio</title>
-<meta name="description" content="Data Analyst portfolio of Bagus Bernadi: 34 projects in manufacturing analytics, SQL, Python, statistics, and dashboards.">
-<meta property="og:title" content="Bagus Bernadi · Data Analyst Portfolio">
-<meta property="og:description" content="34 data projects: manufacturing analytics, SQL, Python, statistics, and dashboards.">
+<title>Bagus Bernadi · Data Analyst & Tool Builder</title>
+<meta name="description" content="Portfolio of Bagus Bernadi, Process Engineer turned Data Analyst: 34 analytics projects and 10 web apps. Manufacturing analytics, dashboards, Excel automation, and internal tools.">
+<meta property="og:title" content="Bagus Bernadi · Data Analyst & Tool Builder">
+<meta property="og:description" content="34 analytics projects and 10 web apps: manufacturing analytics, SQL, Python, dashboards, Excel automation, and internal tools.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://bagusbernadi.github.io/">
+<meta property="og:image" content="https://bagusbernadi.github.io/assets/thumbs/p3d.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script>/* view chooser: ?view=new|classic, saved choice in localStorage "view" */
+(function(){try{var q=new URLSearchParams(location.search).get("view");if(q==="new"||q==="classic")localStorage.setItem("view",q);
+if((q||localStorage.getItem("view"))==="classic"){var u=new URLSearchParams(location.search);u.delete("view");var s=u.toString();location.replace("classic/"+(s?"?"+s:"")+location.hash);}}catch(e){}})();</script>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=20261025a">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=20261118a">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Bagus Bernadi","jobTitle":"Process Engineer → Data Analyst","url":"https://bagusbernadi.github.io/","sameAs":["https://github.com/bagusbernadi","https://www.linkedin.com/in/bagus-bernadi/"],"knowsAbout":["SQL","Python","Statistics","SPC","Dashboards","Excel automation","Manufacturing analytics"]}</script>
 </head>
 <body>
-<header class="top">
- <div class="wrap bar">
-  <a class="brand" href="#top" id="brand">Bagus Bernadi</a>
-  <nav aria-label="Main">
-   <a href="#projects" data-i="nav.projects">Projects</a>
-   <a href="#about" data-i="nav.about">About</a>
-   <a href="#skills" data-i="nav.skills">Skills</a>
-   <a href="#contact" data-i="nav.contact">Contact</a>
-  </nav>
-  <div class="lang" role="group" aria-label="Language">
-   <button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="id" aria-pressed="false">ID</button>
-  </div>
- </div>
-</header>
+<nav class="top" aria-label="Main"><div class="wrap bar">
+ <a class="brand" href="#top">Bagus<span>.</span>Bernadi</a>
+ <div class="links"><a href="#work" data-i="nav.work"></a><a href="#apps" data-i="nav.apps"></a><a href="#all" data-i="nav.all"></a><a href="#services" data-i="nav.svc"></a></div>
+ <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="id" aria-pressed="false">ID</button><button type="button" data-lang="zh" aria-pressed="false" lang="zh-CN">中文</button></div>
+ <a class="btn acc sm" href="#contact" data-i="nav.cta"></a>
+ <button class="menu" type="button" id="menuBtn" aria-expanded="false" aria-controls="drawer" aria-label="Menu"><span></span></button>
+</div>
+<div class="drawer" id="drawer"><a href="#work" data-i="nav.work"></a><a href="#apps" data-i="nav.apps"></a><a href="#all" data-i="nav.all"></a><a href="#services" data-i="nav.svc"></a><a href="#contact" data-i="nav.cta"></a></div>
+</nav>
 
-<main id="top">
- <section class="hero wrap">
-  <p class="eyebrow" id="role"></p>
-  <h1 data-i="hero.title">Turning shop-floor data into decisions</h1>
-  <p class="lead" data-i="hero.lead">I am a Process Engineer in high-tech component manufacturing, moving into data analytics. This portfolio collects 34 projects: from yield and defect tracking on the production line to public datasets in retail, energy, and the job market.</p>
-  <div class="cta"><a class="btn pri" href="#projects" data-i="hero.cta1">Browse projects</a><a class="btn" id="ghLink" href="https://github.com/bagusbernadi" target="_blank" rel="noopener" data-i="hero.cta2">GitHub profile</a></div>
-  <div class="stats" id="stats"></div>
- </section>
+<main class="wrap" id="top">
+<div class="bento">
+ <div class="t intro"><div><div class="hi" data-i="hero.hi"></div><h1 data-i="hero.h1"></h1><p data-i="hero.p"></p></div>
+  <div class="cta"><a class="btn pri" href="#work" data-i="hero.b1"></a><a class="btn" href="#services" data-i="hero.b2"></a></div></div>
+ <div class="t num"><b id="nP"></b><span data-i="n.p"></span><small id="nD"></small></div>
+ <div class="t num n2"><b id="nA"></b><span data-i="n.a"></span><small data-i="n.as"></small></div>
+ <a class="t shot" href="https://github.com/bagusbernadi/mes-que-un-club" target="_blank" rel="noopener"><img src="assets/thumbs/mes.jpg" alt="MES PLC Splitter"><div><span class="k" data-i="shot.k"></span><h3>MES PLC Splitter</h3><p data-i="shot.p"></p></div></a>
+ <div class="t open"><span class="dot"><i></i><span data-i="open.h"></span></span><p data-i="open.p"></p></div>
+ <div class="t stack"><h3 data-i="stack.h"></h3><div class="chips" id="chips"></div></div>
+ <div class="t talk"><h3 data-i="talk.h"></h3><p data-i="talk.p"></p><a class="btn wa sm" id="waT" target="_blank" rel="noopener" data-i="talk.b"></a></div>
+</div>
 
- <section id="projects" class="wrap">
-  <h2 data-i="proj.title">Projects</h2>
-  <p class="sub" data-i="proj.sub">Every project has its own repository and GitHub Pages site. Each one starts from a business question, then shows the data, analysis, and recommendation.</p>
-  <div class="legend" id="legend"></div>
-  <div class="filters">
-   <label class="search"><span class="sr" data-i="f.search">Search</span><input id="q" type="search" data-ph="f.ph" placeholder="Search title, tool, or question"></label>
-   <div class="skillf" id="fSkill" role="group" aria-label="Skills"></div>
-   <div class="fgroup" id="fCat" role="group" aria-label="Category"></div>
-   <div class="frow">
-    <div class="fgroup" id="fStatus" role="group" aria-label="Status"></div>
-    <select id="sort" aria-label="Sort"><option value="no" data-i="s.no">Order: project number</option><option value="status" data-i="s.status">Order: most complete first</option><option value="skill" data-i="s.skill">Order: most matching skills</option></select>
-   </div>
-  </div>
-  <p class="count" id="count" aria-live="polite"></p>
-  <div class="grid" id="grid"></div>
-  <p class="empty" id="empty" hidden data-i="f.empty">No project matches the filter.</p>
- </section>
+<section id="work"><div class="sh"><div><div class="eb" data-i="work.eb"></div><h2 data-i="work.h"></h2><p data-i="work.p"></p></div></div>
+ <div class="feat" id="feat"></div></section>
 
- <section id="about" class="wrap two">
-  <div>
-   <h2 data-i="about.title">About</h2>
-   <p data-i="about.p1">I work on a high-tech component production line: monitoring output, yield, rework, and defects, training new operators, and building small tools in Excel and Python to make reporting faster and more reliable.</p>
-   <p data-i="about.p2">These projects show how I approach data: define the business question first, clean and validate the data, use SQL and statistics only where they answer the question, and finish with a clear recommendation and an estimated impact.</p>
-  </div>
-  <div class="card note">
-   <h3 data-i="about.h3">How to read each project</h3>
-   <ol>
-    <li data-i="about.l1"><b>Problem</b>: the business question.</li>
-    <li data-i="about.l2"><b>Data</b>: source, size, and cleaning steps.</li>
-    <li data-i="about.l3"><b>Analysis</b>: method, code, and findings.</li>
-    <li data-i="about.l4"><b>Recommendation</b>: actions based on findings.</li>
-    <li data-i="about.l5"><b>Impact</b>: formula with explicit assumptions.</li>
-   </ol>
-   <p class="small" data-i="about.note">Manufacturing projects use simulated or anonymized data because factory data is confidential. Impact numbers are labeled "estimated" or "simulated".</p>
-  </div>
- </section>
+<section id="apps" style="padding-top:20px"><div class="sh"><div><div class="eb" data-i="apps.eb"></div><h2 data-i="apps.h"></h2><p data-i="apps.p"></p></div></div>
+ <div class="tools" id="appF"></div>
+ <div class="apps" id="apps2"></div></section>
 
- <section id="skills" class="wrap">
-  <h2 data-i="skills.title">Skills</h2>
-  <p class="sub" data-i="skills.sub">Underlined terms: hover or tap for a short explanation.</p>
-  <div class="skills" id="skillGrid"></div>
- </section>
+<section id="all" style="padding-top:20px"><div class="sh"><div><div class="eb" data-i="all.eb"></div><h2 id="allT"></h2><p data-i="all.p"></p></div></div>
+ <div class="tools"><input id="q" type="search" autocomplete="off"><span id="stF"></span><span id="skSel"></span></div>
+ <div class="count" id="cnt" aria-live="polite"></div>
+ <div class="acc" id="acc"></div></section>
 
- <section id="contact" class="wrap">
-  <h2 data-i="contact.title">Contact</h2>
-  <p class="sub" data-i="contact.sub">Open to Data Analyst roles in Indonesia and abroad.</p>
-  <div class="cta" id="contactLinks"></div>
- </section>
+<section id="services"><div class="sh" style="justify-content:center;text-align:center"><div><div class="eb" data-i="svc.eb"></div><h2 data-i="svc.h"></h2><p style="margin-inline:auto" data-i="svc.p"></p></div></div>
+ <div class="svc" id="svc"></div><div class="steps" id="steps"></div>
+ <div class="faq" id="faq"></div></section>
+
+<section id="contact" style="padding-top:20px"><div class="end"><h2 data-i="end.h"></h2><p data-i="end.p"></p><div class="cta" id="cb"></div><span class="addr" id="addr"></span></div></section>
 </main>
+<footer><span id="foot"></span> · <a href="classic/?view=classic" id="toClassic"></a></footer>
+<div class="vw" id="vw" hidden>
+ <div class="vw-box" role="dialog" aria-modal="true" aria-labelledby="vwT" aria-describedby="vwP">
+  <div class="vw-lang" id="vwLang"><button type="button" data-l="en">EN</button><button type="button" data-l="id">ID</button><button type="button" data-l="zh" lang="zh-CN">中文</button></div>
+  <h2 id="vwT"></h2><p id="vwP"></p>
+  <div class="vw-opts">
+   <button type="button" class="vw-opt new" id="vwNew"><span class="vw-pv"><i></i><i></i><i></i><i></i></span><b id="vwNewT"></b><small id="vwNewS"></small></button>
+   <button type="button" class="vw-opt old" id="vwOld"><span class="vw-pv"><i></i><i></i><i></i></span><b id="vwOldT"></b><small id="vwOldS"></small></button>
+  </div>
+  <label class="vw-rem"><input type="checkbox" id="vwRem" checked> <span id="vwRemT"></span></label>
+ </div>
+</div>
+<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
 
-<footer class="wrap foot"><span id="year"></span> · <span data-i="foot">Built with plain HTML, CSS, and JavaScript. Hosted on GitHub Pages.</span></footer>
-
-<script src="data/projects.js?v=20261025a"></script>
-<script src="assets/app.js?v=20261025a"></script>
+<script src="data/projects.js?v=20261118a"></script>
+<script src="data/showcase.js?v=20261118a"></script>
+<script src="assets/app.js?v=20261118a"></script>
 </body>
 </html>

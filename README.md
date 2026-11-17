@@ -15,22 +15,39 @@ This repository is the hub that links 34 data projects. Each project has its own
 Tanpa build step, tanpa framework. Struktur:
 
 ```
-index.html            Halaman utama (EN/ID toggle)
-assets/               style.css, app.js, favicon.svg
-data/projects.js      SATU-SATUNYA file yang perlu diedit untuk update project
-docs/PROJECT-REPO-GUIDE.md   Aturan untuk 34 repo project
+index.html            Halaman utama baru (layout Bento): hero, case study, web apps, semua project (cari/filter), jasa, FAQ, kontak; toggle EN / ID / 中文
+assets/style.css      Tampilan
+assets/app.js         Logika halaman + teks UI EN/ID (objek T). Tambah bahasa: key baru di T + tombol di .lang; teks data pakai {en, id, zh}
+assets/thumbs/        Screenshot aplikasi & halaman laporan (640x400 .jpg)
+data/projects.js      PROFILE (kontak, WhatsApp) + daftar 34 project
+data/showcase.js      Case study unggulan, web apps, jasa, langkah kerja, FAQ (semua teks {en, id, zh})
+docs/PROJECT-REPO-GUIDE.md   Aturan untuk repo project
+classic/              Tampilan lama (masa transisi)
 404.html  .nojekyll
 ```
 
 ### Update status project
-Edit `data/projects.js`, field `status`: `planned` (tombol "Coming soon") · `design` · `in-progress` · `done` (tombol View project + Code aktif).
+Edit `data/projects.js`, field `status`: `planned` · `design` · `in-progress` · `done`.
+Link otomatis: `https://bagusbernadi.github.io/<slug>/` dan `https://github.com/bagusbernadi/<slug>`; isi `"live"` / `"repo"` jika berbeda.
+Skill di daftar project dan chip "Most-used skills" (top 10, bisa diklik) diambil dari field `skills`.
 
-Link otomatis: `https://bagusbernadi.github.io/<slug>/` dan `https://github.com/bagusbernadi/<slug>`. Jika nama repo berbeda dari slug (pola `Project-N-<Nama>`) atau URL berbeda (misalnya dashboard Streamlit), tambahkan `"live": "https://..."` dan `"repo": "https://github.com/..."`.
+### Update case study, aplikasi, atau jasa
+Edit `data/showcase.js`.
+- **Case study unggulan** (`featured`): angka harus sama dengan README repo project. Link PDF otomatis ke `Creatative/Project_N/Project-N-One-Pager.pdf`.
+- **Aplikasi baru** (`apps`): tambahkan entri + screenshot `assets/thumbs/<id>.jpg` (640x400).
+- **Nomor WhatsApp**: `PROFILE.whatsapp` di `data/projects.js` (format `628xxxxxxxxxx`).
 
-#### Filter & urutan berdasarkan skill
-Skill di kartu project dibaca otomatis dari field `tools` (misalnya "SQL (DuckDB)" → SQL + DuckDB). Daftar skill dan pola pengenalnya ada di konstanta `SK` di `assets/app.js`.
-Setiap project sekarang punya field `skills` eksplisit (dipakai lebih dulu daripada pembacaan otomatis). Jika ingin mengubah, tambahkan `"skills": ["SQL", "DuckDB", "Python"]` pada project tersebut di `data/projects.js`.
-Link bisa dibagikan langsung dengan filter skill, misalnya `https://bagusbernadi.github.io/?skill=SQL,Python`.
+### Masa transisi: tampilan lama vs baru
+- Tampilan lama dipindah ke `classic/` (`classic/index.html`, `classic/app.js`, `classic/style.css`) dan tetap membaca `data/projects.js`.
+- Kunjungan pertama ke halaman utama memunculkan popup pilihan (background blur). Pilihan disimpan di `localStorage` key `view` (`new` / `classic`) jika "Ingat pilihan saya" dicentang; jika tidak, hanya untuk sesi itu.
+- Link paksa: `/?view=new` atau `/?view=classic`. Footer halaman baru punya link ke tampilan lama; halaman lama punya banner ke tampilan baru.
+- Mengakhiri transisi: hapus folder `classic/`, blok `<script>` "view chooser" di `<head>` dan elemen `#vw` di `index.html`, link `#toClassic` di footer, serta bagian "view chooser" di `assets/app.js` dan `assets/style.css`.
+
+### Link yang bisa dibagikan
+- `?lang=id` / `?lang=zh` → langsung Bahasa Indonesia / Mandarin
+- `?skill=SQL` → daftar project terfilter satu skill
+- `?q=yield` → daftar project dengan kata kunci
+- `#services` → langsung ke bagian Jasa (untuk calon customer)
 
 ## Daftar repo project
 
